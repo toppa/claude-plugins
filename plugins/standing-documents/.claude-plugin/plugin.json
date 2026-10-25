@@ -1,0 +1,8 @@
+{
+  "name": "standing-documents",
+  "description": "The standing-documents guide, which gives each kind of project documentation one home, and the adopt skill, which applies the guide to a project or upgrades it to a newer version.",
+  "version": "0.1.0",
+  "author": { "name": "Michael Toppa" },
+  "license": "MIT",
+  "keywords": ["documentation", "claude-md", "adr", "workflow"]
+}

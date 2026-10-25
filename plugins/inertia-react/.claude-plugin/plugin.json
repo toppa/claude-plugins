@@ -1,0 +1,8 @@
+{
+  "name": "inertia-react",
+  "description": "Inertia Rails and React guidance for projects that pair a Rails back end with a React front end over Inertia.",
+  "version": "0.2.1",
+  "author": { "name": "Michael Toppa" },
+  "license": "MIT",
+  "keywords": ["inertia", "rails", "react", "typescript", "vite"]
+}

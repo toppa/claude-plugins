@@ -1,0 +1,8 @@
+{
+  "name": "ste-writing",
+  "description": "The ASD-STE100 output style, a house style that draws on Simplified Technical English. It sets the shape of each English sentence that Claude writes: replies, documents, commit messages, pull request text, and code comments.",
+  "version": "0.1.0",
+  "author": { "name": "Michael Toppa" },
+  "license": "MIT",
+  "keywords": ["writing", "style", "output-style", "simplified-technical-english", "asd-ste100"]
+}

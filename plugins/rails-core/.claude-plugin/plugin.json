@@ -1,0 +1,8 @@
+{
+  "name": "rails-core",
+  "description": "Rails and Ruby guidance for every Rails project: extraction thresholds, architecture boundaries, Rails 8.1 idioms, Postgres patterns, security review, RSpec conventions, and test performance.",
+  "version": "0.4.1",
+  "author": { "name": "Michael Toppa" },
+  "license": "MIT",
+  "keywords": ["rails", "ruby", "rspec", "postgres", "code-review"]
+}

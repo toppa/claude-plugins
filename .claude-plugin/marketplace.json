@@ -1,0 +1,44 @@
+{
+  "name": "toppa",
+  "owner": {
+    "name": "Michael Toppa"
+  },
+  "description": "Michael Toppa's curated Claude Code plugins: guidance for Rails, Inertia, and React work, the workflow around the code, a documentation pattern for a project, and a writing style.",
+  "plugins": [
+    {
+      "name": "rails-core",
+      "source": "./plugins/rails-core",
+      "description": "Rails and Ruby guidance for every Rails project: extraction thresholds, architecture boundaries, Rails 8.1 idioms, Postgres patterns, security review, RSpec conventions, and test performance.",
+      "category": "engineering",
+      "keywords": ["rails", "ruby", "rspec", "postgres", "code-review"]
+    },
+    {
+      "name": "inertia-react",
+      "source": "./plugins/inertia-react",
+      "description": "Inertia Rails and React guidance for projects that pair a Rails back end with a React front end over Inertia.",
+      "category": "engineering",
+      "keywords": ["inertia", "rails", "react", "typescript", "vite"]
+    },
+    {
+      "name": "dev-workflow",
+      "source": "./plugins/dev-workflow",
+      "description": "The workflow around the code, in any language: writing an issue for the team's tracker, implementing an issue against its acceptance criteria, writing a plan document, working it step by step, splitting a change into reviewable commits, writing the message for each one, writing the pull request title and body, reviewing a pull request or the queue of pull requests that await the user's review, and triaging the Sentry review queue.",
+      "category": "workflow",
+      "keywords": ["git", "commits", "pull-requests", "code-review", "issues", "planning", "workflow"]
+    },
+    {
+      "name": "standing-documents",
+      "source": "./plugins/standing-documents",
+      "description": "The standing-documents guide, which gives each kind of project documentation one home, and the adopt skill, which applies the guide to a project or upgrades it to a newer version.",
+      "category": "workflow",
+      "keywords": ["documentation", "claude-md", "adr", "workflow"]
+    },
+    {
+      "name": "ste-writing",
+      "source": "./plugins/ste-writing",
+      "description": "The ASD-STE100 output style, a house style that draws on Simplified Technical English. It sets the shape of each English sentence that Claude writes: replies, documents, commit messages, pull request text, and code comments.",
+      "category": "writing",
+      "keywords": ["writing", "style", "output-style", "simplified-technical-english", "asd-ste100"]
+    }
+  ]
+}
