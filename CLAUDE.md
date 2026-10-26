@@ -32,9 +32,9 @@ project in general terms, such as "a private Rails 8.1 application", and keep th
 
 ## Before you commit
 
-Run `ruby scripts/check-skills.rb`. It asserts seven properties that a skill cannot fail
-loudly at run time — paths, names, agents, anchors, estimates, index, versions — and all
-seven must pass.
+Run `ruby scripts/check-skills.rb`. It asserts eight properties that cannot fail loudly at
+run time — paths, names, agents, anchors, estimates, index, versions, readmes — and all
+eight must pass.
 
 **Know its blind spot.** It validates markdown *anchors*, not prose section names. A
 sentence claiming "`rails-architecture` covers this in its 'When NOT to Abstract' section"

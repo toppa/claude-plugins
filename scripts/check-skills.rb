@@ -3,7 +3,7 @@
 
 # Integrity checker for the plugin marketplace in this repo.
 #
-# Asserts seven properties that a skill cannot fail loudly at runtime:
+# Asserts eight properties that cannot fail loudly at run time:
 #
 #   1. paths        every reference/script path in a skill body, a README, or CONTRIBUTING.md resolves
 #   2. names        frontmatter `name` equals the containing directory name
@@ -12,6 +12,7 @@
 #   5. estimates    every `(~N lines)` load-cost estimate is within 5% of the truth
 #   6. index        every skill has a `description` or a `when_to_use`
 #   7. versions     the guide's version line equals its plugin's `plugin.json` version
+#   8. readmes      each README names the skills, agents, output styles, and plugins that ship
 #
 # Usage: ruby scripts/check-skills.rb [--quiet]
 # Exits 0 when every check passes, 1 otherwise.
@@ -35,7 +36,8 @@ CHECKS = {
   anchors: "markdown anchor links resolve to a real heading",
   estimates: "(~N lines) estimates within #{(TOLERANCE * 100).round}% of actual",
   index: "every skill has a description or a when_to_use",
-  versions: "the guide's version line matches its plugin.json version"
+  versions: "the guide's version line matches its plugin.json version",
+  readmes: "READMEs name the skills, agents, output styles and plugins that ship"
 }.freeze
 
 $failures = CHECKS.keys.to_h { |k| [k, []] }
@@ -132,6 +134,8 @@ def fence_flags(lines)
   end
 end
 
+HEADING_RE = /\A\s{0,3}(\#{1,6})\s+(.*?)\s*\#*\s*\z/
+
 def slugify(text)
   s = text.dup
   s = s.gsub(/\[([^\]]*)\]\([^)]*\)/, '\1') # link text only
@@ -153,7 +157,7 @@ def heading_slugs(path)
     slugs = Set.new
     lines.each_with_index do |line, i|
       next if fenced[i]
-      m = line.match(/\A\s{0,3}(\#{1,6})\s+(.*?)\s*\#*\s*\z/)
+      m = line.match(HEADING_RE)
       next if m.nil?
 
       base = slugify(m[2])
@@ -524,6 +528,209 @@ else
           "says version #{guide_version}, but #{rel(GUIDE_MANIFEST)} says #{plugin_version.inspect}; " \
           "a project records the guide's version, and `/plugin update` ships the plugin's")
   end
+end
+
+# ---------------------------------------------------------------------------
+# Check 8 — the READMEs name what the plugins ship
+# ---------------------------------------------------------------------------
+
+def readme_entries(path)
+  lines = File.readlines(path, chomp: true)
+  fenced = fence_flags(lines)
+  lines.each_with_index.map { |line, i| [i + 1, line, fenced[i]] }
+end
+
+def readme_sections(entries, level)
+  sections = {}
+  current = nil
+  entries.each do |lineno, line, fenced|
+    m = fenced ? nil : line.match(HEADING_RE)
+    if m && m[1].length <= level
+      current = m[1].length == level ? (sections[m[2]] = { line: lineno, body: [] }) : nil
+    elsif current
+      current[:body] << [lineno, line, fenced]
+    end
+  end
+  sections
+end
+
+def table_rows(body)
+  rows = body.filter_map do |lineno, line, fenced|
+    next if fenced || !line.lstrip.start_with?("|")
+
+    [lineno, line.strip.delete_prefix("|").delete_suffix("|").split("|").map(&:strip)]
+  end
+  rows.reject { |_, cells| cells.all? { |c| c.match?(/\A:?-+:?\z/) } }.drop(1)
+end
+
+def backticked(text)
+  text.to_s[/`([^`]+)`/, 1]
+end
+
+def check_names(readme, section, what, found, expected, source)
+  expected.each do |name|
+    counted(:readmes)
+    next if found.key?(name)
+
+    fail!(:readmes, "#{readme}:#{section[:line]}",
+          "#{what} has no entry for `#{name}`; expected one for each #{source}")
+  end
+  (found.keys - expected).each do |name|
+    counted(:readmes)
+    fail!(:readmes, "#{readme}:#{found[name]}", "#{what} names `#{name}`, but no #{source} has that name")
+  end
+end
+
+AGENT_SKILLS = AGENT_FILES.to_h do |path|
+  yaml, = split_frontmatter(File.readlines(path))
+  fm = parse_frontmatter(yaml, path)
+  entries = fm.is_a?(Hash) ? fm["skills"] : nil
+  [path, entries.is_a?(Array) ? entries.map { |e| e.to_s.strip } : []]
+end
+
+SKILL_LISTS = ["Model-invoked", "User-invoked"].freeze
+
+def check_skill_lists(readme, plugin, plugin_dir, sections)
+  skills = Dir.glob(File.join(plugin_dir, "skills", "*")).select { |d| File.directory?(d) }
+              .map { |d| File.basename(d) }.sort
+  present = SKILL_LISTS.select { |title| sections.key?(title) }
+  return if skills.empty? && present.empty?
+
+  if present.empty?
+    counted(:readmes)
+    fail!(:readmes, readme,
+          "has no `## Model-invoked` or `## User-invoked` section; " \
+          "expected a bullet for each of #{skills.map { |s| "`#{s}`" }.join(', ')}")
+    return
+  end
+
+  bullets = {}
+  present.each do |title|
+    sections[title][:body].each do |lineno, line, fenced|
+      m = fenced ? nil : line.match(/\A\s*[-*]\s+\*\*\[([^\]]+)\]\(([^)]+)\)\*\*/)
+      next if m.nil?
+
+      name, target = m.captures
+      if bullets.key?(name)
+        counted(:readmes)
+        fail!(:readmes, "#{readme}:#{lineno}", "`#{name}` has a second bullet; expected exactly one")
+        next
+      end
+      bullets[name] = [lineno, title]
+
+      counted(:readmes)
+      next if target == "skills/#{name}/SKILL.md"
+
+      fail!(:readmes, "#{readme}:#{lineno}", "the bullet for `#{name}` links to `#{target}`; " \
+                                             "expected `skills/#{name}/SKILL.md`")
+    end
+  end
+  check_names(readme, sections[present.first], "the skill list", bullets.transform_values(&:first), skills,
+              "directory under #{rel(plugin_dir)}/skills/")
+
+  (skills & bullets.keys).each do |skill|
+    counted(:readmes)
+    lineno, title = bullets[skill]
+    user_only = SKILLS.dig([plugin, skill], :frontmatter, "disable-model-invocation") == true
+    expected = user_only ? "User-invoked" : "Model-invoked"
+    next if title == expected
+
+    fail!(:readmes, "#{readme}:#{lineno}",
+          "`#{skill}` is listed under `## #{title}`; expected `## #{expected}`, " \
+          "from its `disable-model-invocation` key")
+  end
+end
+
+def check_agents_section(readme, plugin, plugin_dir, section)
+  agents = Dir.glob(File.join(plugin_dir, "agents", "*.md")).sort
+  return if agents.empty? && section.nil?
+
+  names = agents.map { |p| File.basename(p, ".md") }
+  if section.nil?
+    counted(:readmes)
+    fail!(:readmes, readme,
+          "has no `## Agents` section; expected an H3 for each of #{names.map { |n| "`#{n}`" }.join(', ')}")
+    return
+  end
+
+  subsections = readme_sections(section[:body], 3).to_h { |title, sub| [backticked(title) || title, sub] }
+  check_names(readme, section, "the Agents section", subsections.transform_values { |sub| sub[:line] }, names,
+              "file under #{rel(plugin_dir)}/agents/")
+
+  agents.each do |path|
+    sub = subsections[File.basename(path, ".md")]
+    next if sub.nil?
+
+    counted(:readmes)
+    listed = sub[:body].filter_map { |_, line, fenced| line[/\A\s*[-*]\s+`([^`]+)`\s*\z/, 1] unless fenced }
+                       .map { |s| s.include?(":") ? s : "#{plugin}:#{s}" }
+    next if listed.sort == AGENT_SKILLS.fetch(path).sort
+
+    shown = ->(list) { list.map { |s| "`#{s.delete_prefix("#{plugin}:")}`" }.join(", ") }
+    fail!(:readmes, "#{readme}:#{sub[:line]}",
+          "the section for the `#{File.basename(path, ".md")}` agent lists #{shown.call(listed)} as preloaded; " \
+          "expected the `skills:` list of #{rel(path)}: #{shown.call(AGENT_SKILLS.fetch(path))}")
+  end
+end
+
+def check_output_style_section(readme, plugin_dir, section)
+  styles = Dir.glob(File.join(plugin_dir, "output-styles", "*.md")).sort
+  return if styles.empty?
+
+  if section.nil?
+    counted(:readmes)
+    fail!(:readmes, readme,
+          "has no `## Output style` section; expected one that names #{styles.map { |s| "`#{rel(s)}`" }.join(', ')}")
+    return
+  end
+
+  styles.each do |style|
+    counted(:readmes)
+    named = "output-styles/#{File.basename(style)}"
+    next if section[:body].any? { |_, line, _| line.include?(named) }
+
+    fail!(:readmes, "#{readme}:#{section[:line]}",
+          "the Output style section does not name `#{named}`; " \
+          "expected it for each file under #{rel(plugin_dir)}/output-styles/")
+  end
+end
+
+PLUGIN_DIRS.each do |plugin_dir|
+  readme = File.join(plugin_dir, "README.md")
+  unless File.file?(readme)
+    counted(:readmes)
+    fail!(:readmes, readme, "is missing; expected a README for plugin `#{File.basename(plugin_dir)}`")
+    next
+  end
+
+  sections = readme_sections(readme_entries(readme), 2)
+  check_skill_lists(readme, File.basename(plugin_dir), plugin_dir, sections)
+  check_agents_section(readme, File.basename(plugin_dir), plugin_dir, sections["Agents"])
+  check_output_style_section(readme, plugin_dir, sections["Output style"])
+end
+
+ROOT_README = File.join(ROOT, "README.md")
+root_sections = readme_sections(readme_entries(ROOT_README), 2)
+marketplace_source = "plugin in .claude-plugin/marketplace.json"
+
+if (section = root_sections["Plugins"])
+  found = table_rows(section[:body]).to_h { |lineno, cells| [backticked(cells[0]) || cells[0], lineno] }
+  check_names(ROOT_README, section, "the Plugins table", found, MARKETPLACE_PLUGINS.to_a.sort, marketplace_source)
+else
+  counted(:readmes)
+  fail!(:readmes, ROOT_README, "has no `## Plugins` section; expected a table row for each #{marketplace_source}")
+end
+
+if (section = root_sections["Installation"])
+  found = section[:body].filter_map do |lineno, line, fenced|
+    name = line[%r{\A\s*/plugin install\s+([A-Za-z0-9_-]+)}, 1]
+    [name, lineno] if fenced && name
+  end.to_h
+  check_names(ROOT_README, section, "the install block", found, MARKETPLACE_PLUGINS.to_a.sort, marketplace_source)
+else
+  counted(:readmes)
+  fail!(:readmes, ROOT_README,
+        "has no `## Installation` section; expected a `/plugin install` line for each #{marketplace_source}")
 end
 
 # ---------------------------------------------------------------------------
