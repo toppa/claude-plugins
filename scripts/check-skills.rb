@@ -5,7 +5,7 @@
 #
 # Asserts seven properties that a skill cannot fail loudly at runtime:
 #
-#   1. paths        every reference/script path in a skill body resolves
+#   1. paths        every reference/script path in a skill body, a README, or CONTRIBUTING.md resolves
 #   2. names        frontmatter `name` equals the containing directory name
 #   3. agents       every agent `skills:` entry is scoped, exists, and is model-invocable
 #   4. anchors      every in-repo markdown anchor link resolves to a real heading
@@ -132,8 +132,6 @@ def fence_flags(lines)
   end
 end
 
-GITHUB_PUNCTUATION = /[ -⁯⸀-⹿\\'!"#$%&()*+,.\/:;<=>?@\[\]^`{|}~]/
-
 def slugify(text)
   s = text.dup
   s = s.gsub(/\[([^\]]*)\]\([^)]*\)/, '\1') # link text only
@@ -141,7 +139,7 @@ def slugify(text)
   s = s.strip.downcase
   # GitHub keeps `_`, so `generator_spec` slugs as `generator_spec`. Stripping
   # it as an emphasis marker breaks every heading with a snake_case identifier.
-  s = s.gsub(GITHUB_PUNCTUATION, "")
+  s = s.gsub(/[^\p{L}\p{M}\p{N}\p{Pc} -]/, "")
   s.tr(" ", "-")
 end
 
@@ -180,8 +178,11 @@ PLUGIN_DIRS = Dir.glob(File.join(ROOT, "plugins", "*")).select { |d| File.direct
 SKILL_FILES = Dir.glob(File.join(ROOT, "plugins", "*", "skills", "*", "SKILL.md")).sort
 AGENT_FILES = Dir.glob(File.join(ROOT, "plugins", "*", "agents", "*.md")).sort
 
-# Every markdown file that ships as skill content, plus the agent definitions.
-CONTENT_FILES = (Dir.glob(File.join(ROOT, "plugins", "*", "skills", "**", "*.md")) + AGENT_FILES).sort
+# Every markdown file that ships as skill content, plus the agent definitions,
+# the READMEs, and CONTRIBUTING.md.
+CONTENT_FILES = (Dir.glob(File.join(ROOT, "plugins", "*", "skills", "**", "*.md")) + AGENT_FILES +
+                 Dir.glob(File.join(ROOT, "{README,CONTRIBUTING}.md")) +
+                 Dir.glob(File.join(ROOT, "plugins", "*", "README.md"))).sort
 
 def plugin_dir_for(path)
   PLUGIN_DIRS.find { |d| path.start_with?("#{d}/") }
