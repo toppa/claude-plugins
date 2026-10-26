@@ -46,8 +46,9 @@ document as it is.
 ## Where the file lives, and what it is called
 
 The **plan directory** comes from a per-user file,
-`~/.claude/data/write-plan/plan-directories.yml`. Each machine keeps its own copy. Find
-this project's entry before any other plan work. Write the plan in that directory.
+`~/.claude/data/dev-workflow/write-plan/plan-directories.yml`. Each machine keeps its own
+copy. Find this project's entry before any other plan work. Write the plan in that
+directory.
 
 - **The key** is the main worktree's absolute path, so all worktrees of one repo share it.
   Outside a git repo, the key is the current directory.
