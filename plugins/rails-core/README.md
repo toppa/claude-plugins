@@ -15,6 +15,9 @@ this decision.
 A skill checks your `Gemfile` before it tells Claude to run a gem that Rails does not ship. A
 skill never adds a gem to your project. ADR [0009](../../docs/adr/) records this rule.
 
+Most skills in this plugin started in public skill packs, and I edited them for correctness.
+[`NOTICE.md`](NOTICE.md) names the source of each skill.
+
 The plugin does not cover these subjects:
 
 - **Inertia and React.** The `inertia-react` plugin covers them.

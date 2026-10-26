@@ -1,19 +1,13 @@
-# toppa/claude-plugins
+# My Claude Code Plugins
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-This repository is a Claude Code plugin marketplace with five plugins. Two plugins give Claude
-guidance for Rails 8.1 applications. One of the two is for a React front end over Inertia. The
-other three plugins work in any programming language. They give Claude three things: a workflow
-for issues, plans, commits, and pull requests; a guide for project documentation; and an output
-style. The marketplace is for a developer who uses Claude Code.
+This marketplace contains skills, agents, and an output style that I use frequently in my work. I designed them with two goals in mind:
 
-Most of the Rails, Inertia, and React skills started in public skill packs, and we edited them
-for correctness. One `dev-workflow` skill also started in a public skill pack. The `NOTICE.md`
-files of [`rails-core`](plugins/rails-core/NOTICE.md),
-[`inertia-react`](plugins/inertia-react/NOTICE.md), and
-[`dev-workflow`](plugins/dev-workflow/NOTICE.md) name the source of each skill. We wrote the
-other skills, the guide, and the output style here.
+1. They provide smooth workflows, and they are opinionated about those workflows.
+2. They are adaptable. If there's an aspect of one that you don't like, customize it for yourself.
+
+I write and maintain my skills using [Matt Pocock's writing-for-agents skill](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents) so they are optimized for agent understanding.
 
 ## Plugins
 
@@ -37,13 +31,12 @@ other skills, the guide, and the output style here.
 /plugin install ste-writing       # then select the style in /config
 ```
 
-`rails-core` is written for Rails 8.1 applications on Ruby 3.4 and PostgreSQL 17.
-`inertia-react` is written for Rails 8.1 applications with `inertia_rails` 3 and React 19. The
-`metadata:` block of each skill in these two plugins names the exact versions that its facts
-were checked against. `dev-workflow`, `standing-documents`, and `ste-writing` work in any
-programming language.
+- `rails-core` is written for Rails 8.1 applications on Ruby 3.4 and PostgreSQL 17.
+- `inertia-react` is written for Rails 8.1 applications with `inertia_rails` 3 and React 19.
+- `dev-workflow`, `standing-documents`, and `ste-writing` work in any programming language.
 
 ## Contributing
 
-Issues are welcome. A pull request is welcome after we agree on its issue.
+Issues are welcome. A pull request is welcome after we agree on its issue. A pull request that
+adds support for another tracker needs no issue first.
 [`CONTRIBUTING.md`](CONTRIBUTING.md) says how to do both.

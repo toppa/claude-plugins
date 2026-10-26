@@ -10,6 +10,9 @@ developer who uses Claude Code in a Rails project with an Inertia and React fron
 The plugin works with the `rails-core` plugin. Several skills point at `rails-core` skills for
 the Ruby side, and the `frontend` agent leaves Ruby to the `rails` agent in `rails-core`.
 
+The skills in this plugin all started in public skill packs, and I edited them for
+correctness. [`NOTICE.md`](NOTICE.md) names the source of each skill.
+
 The plugin does not cover these subjects:
 
 - **Vue and Svelte.** The plugin is React only. ADR [0006](../../docs/adr/) records this
