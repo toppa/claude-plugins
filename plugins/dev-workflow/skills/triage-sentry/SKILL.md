@@ -68,9 +68,18 @@ create a tracker issue, before the user confirms that action.
    an issue alone. A task that waits for the user to file it changes no status either.
    See "Where no tracker file applies" below.
 10. **Report the backlog per project, then offer a sweep.** Query
-    `is:unresolved environment:production !is:for_review` at `limit: 25` and
-    `period: 90d`, sorted by frequency. **Ask at the end of the run, because a prompt
-    at the start blocks the rotation.**
+    `is:unresolved environment:production` at `limit: 25` and `period: 90d`, sorted by
+    frequency, after the writes of item 9. The issues that this run archived or resolved
+    have then left the result. Run the three queue queries of item 3 again, at
+    `limit: 100`. Run them even where an argument replaced the pull of item 3. Drop each
+    issue that they return, because it belongs to a queue and not to the backlog. Name
+    each dropped issue that the pull of item 3 did not hold as the next run's queue.
+    **Sentry's issue search does not negate `is:for_review`, so a query cannot exclude the
+    review queue itself.** Measured 2026-10-26: `!is:for_review` and `-is:for_review` each
+    returned nothing for three projects, while the plain query returned the issues outside
+    the queue. The same day, `!is:resolved` returned archived issues, so the fault is in
+    `is:for_review` and not in every `is:` filter.
+    **Ask at the end of the run, because a prompt at the start blocks the rotation.**
 11. **Offer the application-note edits this run earned, and the retirements the proof
     rules found.** See "The notes are living documents" below.
 
