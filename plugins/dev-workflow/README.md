@@ -1,18 +1,15 @@
 # dev-workflow
 
-`dev-workflow` gives Claude a workflow for the work around the code. It covers issues in a
-tracker, plan documents, the split of a change into commits, and commit messages. It also
-covers pull request descriptions, pull request reviews, and the triage of a Sentry review
-queue. It is for a developer who uses Claude Code in any project, in any programming language.
+This plugin contains skills I use frequently in my work. I designed them with two goals in mind:
 
-The plugin names no programming language, and it reads no `Gemfile`.
+1. They provide smooth workflows, and they are opinionated about those workflows.
+2. They are adaptable. If there's an aspect of a skill that you don't like, customize it for yourself.
 
-The plugin does not cover these subjects:
+You can use them in any typical software development workflow, in any programming language. I tailored the frontmatter of the skills for Claude Code, but you can modify it for use with another harness.
 
-- **Direct access to a tracker other than Linear.** The issue skills hold a tracker file for
-  Linear only. With another tracker, `write-issue` ends with the draft as Markdown for you to
-  paste.
-- **The code itself.** The language plugins, such as `rails-core`, cover it.
+The `write-issue`, `implement-issue`, and `triage-sentry` skills know how to connect to Linear. I designed them to support other trackers as well. PRs for supporting other trackers are welcome! [CONTRIBUTING.md](../../CONTRIBUTING.md) says what such a pull request needs.
+
+I write and maintain my skills using [Matt Pocock's writing-for-agents skill](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents) so they are optimized for agent understanding.
 
 ## Model-invoked
 
