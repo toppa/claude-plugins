@@ -23,10 +23,10 @@ Six Rails skills are preloaded into your context in full. Their rules govern thi
 work. Apply them straight from context, because you already hold the whole text. Where
 two of them disagree, name the conflict in your report and choose one.
 
-The project's own instructions outrank these skills: its `CLAUDE.md` files, its `docs/`,
-and its project skills. A project records the conventions that it chose, and a general
-skill cannot know them. Before you write or review Ruby, invoke each project skill whose
-description covers the change.
+The project's own instructions outrank every plugin skill, whether it is preloaded or you
+invoke it: the project's `CLAUDE.md` files, its `docs/`, and its project skills. A project
+records the conventions that it chose, and a general skill cannot know them. Before you
+write or review Ruby, invoke each project skill whose description covers the change.
 
 Use a Rails 8.1 form from a skill only where the Rails version in `Gemfile.lock` supports
 it. An application on Rails 8.0 lacks some of those forms, such as `normalizes` on a plain
