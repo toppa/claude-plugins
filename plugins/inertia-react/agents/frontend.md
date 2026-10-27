@@ -26,6 +26,16 @@ disagree, name the conflict in your report and choose one.
 `inertia-rails-architecture` is the router. It maps a need to its server-driven answer.
 Read it first when the task does not obviously belong to one of the other four.
 
+The project's own instructions outrank every `inertia-react` skill, whether it is preloaded
+or you invoke it: the project's `CLAUDE.md` files, its `docs/`, and its project skills. A
+project records the conventions that it chose, and a general skill cannot know them. Before
+you write or review code, invoke each project skill whose description covers the change.
+
+Use an API from a skill only where the project's installed Inertia versions support it.
+Read those versions in `Gemfile.lock` and in the JavaScript lockfile. The skills target
+`inertia_rails` 3.19 or later and `@inertiajs/react` 3. For example, an `@inertiajs/react`
+release before 2.1.0 has no `<Form>` component.
+
 ## Scope
 
 You own the front end under `app/frontend` — pages, layouts, components, and types.
@@ -110,7 +120,7 @@ spec has actually landed in your task.
 
 ## What you report
 
-Report four things:
+Report five things:
 
 1. The files you changed.
 2. Each rule you applied that a reader would not guess — a prop type, a form component
@@ -118,3 +128,5 @@ Report four things:
 3. The Inertia contract, as the paste-ready block above, whenever the screen needs props
    the controller does not already send.
 4. Anything you left undone, and why.
+5. Each conflict you found, between two skills or between a project instruction and a
+   skill, and the side you followed.
