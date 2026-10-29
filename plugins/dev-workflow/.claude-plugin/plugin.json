@@ -1,7 +1,7 @@
 {
   "name": "dev-workflow",
   "description": "The workflow around the code, in any language: writing an issue for the team's tracker, implementing an issue against its acceptance criteria, writing a plan document, working it step by step, splitting a change into reviewable commits, writing the message for each one, writing the pull request title and body, reviewing a pull request or the queue of pull requests that await the user's review, and triaging the Sentry review queue.",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "author": { "name": "Michael Toppa" },
   "license": "MIT",
   "keywords": ["git", "commits", "pull-requests", "code-review", "issues", "planning", "workflow"]
