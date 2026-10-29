@@ -136,8 +136,12 @@ After `write-issue` creates the issue:
 - **Name the tracker issue in the `reason` of the `update_issue` call from run item 9.**
   Where the link failed, put the URL of the tracker issue in the `reason` instead.
 - **Archive the issue at `untilEscalating` in the same call**, under rule 3 of the
-  playbook. **Sentry clears `is:for_review` on a status change only, and no tool marks
-  an issue reviewed, so an unresolved task returns to the queue on every later run.**
+  playbook. **Sentry clears `is:for_review` on a status change, and no tool marks an
+  issue reviewed, so an unresolved task returns to the queue on each later run for 7
+  days.** After 7 days, Sentry clears the flag by itself, and the activity feed shows
+  `auto_set_ongoing`. So an issue that no run decides leaves the queue with no decision,
+  and only the backlog report of run item 10 finds it. Measured 2026-10-29: an issue
+  left the queue that way on its eighth day, and it still fired 20 days later.
 
 ### The tracker map
 
