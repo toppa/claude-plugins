@@ -1,29 +1,25 @@
 # rails-core
 
-`rails-core` gives Claude guidance for Ruby and Rails work in a Rails 8.1 application. It covers
-the architecture of a feature, the Rails 8.1 forms of older idioms, PostgreSQL, caching,
-background jobs, authentication, security, RSpec, RuboCop, and code review. It is for a
-developer who uses Claude Code in one or more Rails projects.
+`rails-core` gives Claude expertise in Ruby on Rails and currently targets Rails 8.1. It
+includes an agent and a number of skills covering architecture, PostgreSQL, caching,
+background jobs, authentication, security, RSpec, RuboCop, the Rails 8.1 forms of older
+idioms, and code review.
 
-The plugin serves three response modes: Hotwire, Inertia, and JSON API. The response mode is
-the way that a controller action answers a request. The ordered check that names the mode is in
-the `rails-architecture` skill, in its
-["Response mode"](skills/rails-architecture/SKILL.md#response-mode) section. Each other skill
-points at that section and does not restate the check. ADR [0004](../../docs/adr/) records
-this decision.
+It does not provide front-end expertise. For controllers, it knows how to work with Hotwire,
+Inertia, and the JSON API. See
+["Response mode"](skills/rails-architecture/SKILL.md#response-mode) in
+the `rails-architecture` skill for details.
 
-A skill checks your `Gemfile` before it tells Claude to run a gem that Rails does not ship. A
-skill never adds a gem to your project. ADR [0009](../../docs/adr/) records this rule.
+Many skills are included, but to avoid context bloat they are not preloaded.
 
 Most skills in this plugin started in public skill packs, and I edited them for correctness.
 [`NOTICE.md`](NOTICE.md) names the source of each skill.
 
-The plugin does not cover these subjects:
+The plugin does not cover:
 
 - **Inertia and React.** The `inertia-react` plugin covers them.
-- **Turbo and Stimulus code.** No skill is about them. The `rails` agent still writes the ERB
-  views of a Hotwire project.
-- **Action Cable, Active Storage, and internationalization (I18n).** No skill is about them.
+- **Turbo and Stimulus code.**
+- **Action Cable, Active Storage, and internationalization (I18n).**
 
 ## Model-invoked
 
@@ -53,8 +49,8 @@ The plugin does not cover these subjects:
 
 ### The `rails` agent
 
-The `rails-core:rails` agent does Ruby and Rails work in a Rails 8 application, and it starts with
-these skills in its context:
+The `rails-core:rails` agent starts with these skills in its context, and reaches for the
+others when needed:
 
 - `extraction-timing`
 - `postgres-patterns`

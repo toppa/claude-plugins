@@ -1,23 +1,22 @@
 # inertia-react
 
-`inertia-react` gives Claude guidance for a Rails 8.1 application that renders its pages with
-Inertia and React. Inertia is the layer that sends the props of a Rails controller action to a
-React page component. The plugin covers controllers that render Inertia pages, page components
+`inertia-react` gives Claude expertise in Inertia and React for Ruby on Rails and currently
+targets Rails 8.1. The plugin covers controllers that render Inertia pages, page components
 and layouts, forms, and navigation and prefetching. It also covers TypeScript types, request
-specs, server-side rendering, and React performance and component design. It is for a
-developer who uses Claude Code in a Rails project with an Inertia and React front end.
+specs, server-side rendering, and React performance and component design.
 
 The plugin works with the `rails-core` plugin. Several skills point at `rails-core` skills for
 the Ruby side, and the `frontend` agent leaves Ruby to the `rails` agent in `rails-core`.
+
+Many skills are included, but to avoid context bloat they are not preloaded.
 
 The skills in this plugin all started in public skill packs, and I edited them for
 correctness. [`NOTICE.md`](NOTICE.md) names the source of each skill.
 
 The plugin does not cover these subjects:
 
-- **Vue and Svelte.** The plugin is React only. ADR [0006](../../docs/adr/) records this
-  decision.
-- **The first install of Inertia in an application.** No skill is about it.
+- **Vue and Svelte.** The plugin is React only.
+- **Setting up Inertia in a Rails application.**
 - **Tests of React components.** The `inertia-rails-testing` skill covers request specs on the
   Rails side only.
 
@@ -38,8 +37,8 @@ The plugin does not cover these subjects:
 
 ### The `frontend` agent
 
-The `inertia-react:frontend` agent does Inertia and React work in a Rails 8 application, and it
-starts with these skills in its context:
+The `inertia-react:frontend` starts with these skills in its context, and reaches for the
+others when needed::
 
 - `inertia-rails-architecture`
 - `inertia-rails-controllers`

@@ -1,26 +1,49 @@
 # standing-documents
 
-> A guide that gives each kind of project documentation one home, and the skill that applies it
-> to your project.
+> A skill that sets up any software project with a comprehensive and self-maintaining
+> documentation system. This is currently in an **alpha** development stage.
 
 ## Highlights
 
-- **Each kind of content gets one home**, so that an agent finds one copy of each fact.
-- **The agent does most of the work.** A person on the project approves the list of moves, and
-  reads back the result.
-- **One command does a first adoption or an upgrade:** `/standing-documents:adopt`.
-- **The guide is one Markdown file.** Any agent can use it with no plugin.
-- **Each version has a changelog entry**, which says what an adopting project must do.
+- **Each type of documentation has a specified home, and there is no duplication**.
+  Systematic rules determine where everything goes.
+- **For setup in an existing project, the agent does most of the work.** A person on the
+  project approves each step of the reorganization.
+- **The system self-maintains.** It can use CI to monitor changes and flag gaps or errors.
+  
 
 ## Overview
 
-The guide,
-[`skills/adopt/references/adopt-standing-documents.md`](skills/adopt/references/adopt-standing-documents.md),
-tells an AI coding agent how to reorganize the documentation of a project. After the
-reorganization, each kind of content has one home. The agent does most of the work. A person on
-the project approves the moves, and reads back the result.
+[The guide](skills/adopt/references/adopt-standing-documents.md) tells an AI coding agent
+how to reorganize the documentation of a project. After the reorganization, each kind of
+content has one home. The agent does most of the work. A person on the project approves the
+moves. Going forward... TODO
 
 ### Why adopt it
+
+When it comes to documentation, its common for software projects to suffer from a variety of
+problems. This was true before AI, and without careful guidance AI can make those problems 
+worse instead of better, by proliferating existing patterns. The standing documents address
+these problems:
+
+- **Terminology:** inconsistent use of terminology is common in software projects, with one
+  concept often referred to more than one way, or different concepts muddled together with
+  similar terms. This is confusing for people and for AI agents. The standing documents
+  clearly define every term in a glossary, including words to avoid for them.
+- **Decision records:** ADRs ([Architecture Decision Records](https://adr.github.io/))
+  provide humans and AI agents with something the code cannot: the reasons why a specific
+  solution or design was adopted. This prevents re-arguing them and can reveal important
+  considerations not evident in the code itself. The standing documents provide criteria for
+  creating ADRs that people and AI agents can follow. ADRs are meant for "significant"
+  decisions, but "significant" is highly subjective, especially to an AI agent. The bar for
+  creating an ADR has 2 criteria: would a reasonable person argue the decision again, and
+  would its reversal cost real work?
+- **Tests as documentation:** the standing documents treat the test suite as a first class
+  citizen for documentation. Test descriptions are typically written from a user's
+  perspective and implicitly explain why the code being tested matters. The tests also
+  explain important edge cases. A good test suite provides most of the documentation a
+  project actually needs, so the standing documents do not duplicate information that is
+  already in them. AI agents are especially good at absorbing knowledge rapidly from tests.
 
 An adoption lets the agent read less to learn the same rules. The context window of the agent
 has a fixed size. In most projects, one file mixes definitions, the reasons for past decisions,
