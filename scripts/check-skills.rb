@@ -588,7 +588,11 @@ AGENT_SKILLS = AGENT_FILES.to_h do |path|
   [path, entries.is_a?(Array) ? entries.map { |e| e.to_s.strip } : []]
 end
 
-SKILL_LISTS = ["Model-invoked", "User-invoked"].freeze
+SKILL_LISTS = ["Model-invoked skills", "User-invoked skills"].freeze
+SKILL_ENTRY_RES = [
+  /\A\s*[-*]\s+\*\*\[([^\]]+)\]\(([^)]+)\)\*\*/,
+  /\A###\s+\[([^\]]+)\]\(([^)]+)\)\s*\z/
+].freeze
 
 def check_skill_lists(readme, plugin, plugin_dir, sections)
   skills = Dir.glob(File.join(plugin_dir, "skills", "*")).select { |d| File.directory?(d) }
@@ -599,21 +603,21 @@ def check_skill_lists(readme, plugin, plugin_dir, sections)
   if present.empty?
     counted(:readmes)
     fail!(:readmes, readme,
-          "has no `## Model-invoked` or `## User-invoked` section; " \
-          "expected a bullet for each of #{skills.map { |s| "`#{s}`" }.join(', ')}")
+          "has no `## Model-invoked skills` or `## User-invoked skills` section; " \
+          "expected an entry for each of #{skills.map { |s| "`#{s}`" }.join(', ')}")
     return
   end
 
   bullets = {}
   present.each do |title|
     sections[title][:body].each do |lineno, line, fenced|
-      m = fenced ? nil : line.match(/\A\s*[-*]\s+\*\*\[([^\]]+)\]\(([^)]+)\)\*\*/)
+      m = fenced ? nil : SKILL_ENTRY_RES.lazy.filter_map { |re| line.match(re) }.first
       next if m.nil?
 
       name, target = m.captures
       if bullets.key?(name)
         counted(:readmes)
-        fail!(:readmes, "#{readme}:#{lineno}", "`#{name}` has a second bullet; expected exactly one")
+        fail!(:readmes, "#{readme}:#{lineno}", "`#{name}` has a second entry; expected exactly one")
         next
       end
       bullets[name] = [lineno, title]
@@ -621,7 +625,7 @@ def check_skill_lists(readme, plugin, plugin_dir, sections)
       counted(:readmes)
       next if target == "skills/#{name}/SKILL.md"
 
-      fail!(:readmes, "#{readme}:#{lineno}", "the bullet for `#{name}` links to `#{target}`; " \
+      fail!(:readmes, "#{readme}:#{lineno}", "the entry for `#{name}` links to `#{target}`; " \
                                              "expected `skills/#{name}/SKILL.md`")
     end
   end
@@ -632,7 +636,7 @@ def check_skill_lists(readme, plugin, plugin_dir, sections)
     counted(:readmes)
     lineno, title = bullets[skill]
     user_only = SKILLS.dig([plugin, skill], :frontmatter, "disable-model-invocation") == true
-    expected = user_only ? "User-invoked" : "Model-invoked"
+    expected = user_only ? "User-invoked skills" : "Model-invoked skills"
     next if title == expected
 
     fail!(:readmes, "#{readme}:#{lineno}",
@@ -641,21 +645,30 @@ def check_skill_lists(readme, plugin, plugin_dir, sections)
   end
 end
 
-def check_agents_section(readme, plugin, plugin_dir, section)
+AGENT_HEADING_RE = /\AThe `([^`]+)` agent\z/
+
+def check_agent_sections(readme, plugin, plugin_dir, sections)
   agents = Dir.glob(File.join(plugin_dir, "agents", "*.md")).sort
-  return if agents.empty? && section.nil?
+  subsections = sections.filter_map do |title, section|
+    name = title[AGENT_HEADING_RE, 1]
+    [name, section] if name
+  end.to_h
+  return if agents.empty? && subsections.empty?
 
   names = agents.map { |p| File.basename(p, ".md") }
-  if section.nil?
+  source = "file under #{rel(plugin_dir)}/agents/"
+  names.each do |name|
     counted(:readmes)
-    fail!(:readmes, readme,
-          "has no `## Agents` section; expected an H3 for each of #{names.map { |n| "`#{n}`" }.join(', ')}")
-    return
-  end
+    next if subsections.key?(name)
 
-  subsections = readme_sections(section[:body], 3).to_h { |title, sub| [backticked(title) || title, sub] }
-  check_names(readme, section, "the Agents section", subsections.transform_values { |sub| sub[:line] }, names,
-              "file under #{rel(plugin_dir)}/agents/")
+    fail!(:readmes, readme, "has no agent section for `#{name}`; expected a heading `## The <name> agent`, " \
+                            "with the name in backticks, for each #{source}")
+  end
+  (subsections.keys - names).each do |name|
+    counted(:readmes)
+    fail!(:readmes, "#{readme}:#{subsections[name][:line]}",
+          "the section for the `#{name}` agent names no #{source}")
+  end
 
   agents.each do |path|
     sub = subsections[File.basename(path, ".md")]
@@ -705,7 +718,7 @@ PLUGIN_DIRS.each do |plugin_dir|
 
   sections = readme_sections(readme_entries(readme), 2)
   check_skill_lists(readme, File.basename(plugin_dir), plugin_dir, sections)
-  check_agents_section(readme, File.basename(plugin_dir), plugin_dir, sections["Agents"])
+  check_agent_sections(readme, File.basename(plugin_dir), plugin_dir, sections)
   check_output_style_section(readme, plugin_dir, sections["Output style"])
 end
 
