@@ -193,6 +193,13 @@ A link belongs to a Linear issue when its URL holds `/issue/<identifier>/`.
 **Match the identifier, and not the whole URL, because Linear changes the slug when the
 title changes.**
 
+**A move to another team changes the identifier, and the Sentry link keeps the old one.**
+So a link whose identifier matches no row is not yet a link to a different issue. Call
+`get_issue` with the identifier from the link. Linear returns the moved issue under its new
+identifier. Where that identifier is the row's own, the pair is in step. Measured
+2026-11-02: four Sentry issues linked the old identifier of one moved issue, and the
+reconciliation reported each of them as a link to a different issue.
+
 For each Duplicate in the set, call `get_issue` with `includeRelations: true`. Its
 `duplicateOf` names the surviving issue. `list_issues` does not return it.
 
