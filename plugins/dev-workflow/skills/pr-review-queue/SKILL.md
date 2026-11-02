@@ -144,15 +144,22 @@ governs every PR in this queue. It sits in this plugin, at
 Take the PRs in the order the user set, one at a time:
 
 1. Name the PR. Print its URL, so the user can open it and follow along.
-2. Read all of the `pr-review` skill's `SKILL.md` in one Read call, with no offset and no
+2. Confirm that the PR still needs the user, with
+   `gh pr view <url> --json state,mergedAt,reviewRequests`. The Step 1 table is a
+   snapshot, and a PR can merge, close, or drop the request on the user after it. A
+   merge does not clear the review request, so check `state` too. Where the state is not
+   `OPEN`, or no request names the user, tell the user what changed. Ask before you
+   review it.
+3. Read all of the `pr-review` skill's `SKILL.md` in one Read call, with no offset and no
    limit. Read it again for every PR, because an earlier read can drop out of the
    context in a long queue.
-3. Apply the method. Print the report in chat.
-4. Wait. The user asks their questions. The user posts their review, or asks you to
+4. Apply the method. Run the check from item 2 again before you print the report,
+   because a PR can merge while its review runs. Print the report in chat.
+5. Wait. The user asks their questions. The user posts their review, or asks you to
    post it.
-5. Read their move to the next PR as the signal that this review is finished. Close the
+6. Read their move to the next PR as the signal that this review is finished. Close the
    review down as the `pr-review` skill's Step 8 says.
-6. Name the next PR with its file count and ±.
+7. Name the next PR with its file count and ±.
 
 The queue prunes itself. A submitted review clears GitHub's review request, so a PR the
 user acted on drops out of the Step 1 query. A PR the user deferred stays in it, and
