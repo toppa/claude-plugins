@@ -104,7 +104,11 @@ Pass these arguments:
 - `issueId`: the Sentry short id, such as `CHECKOUT-7`. `issueUrl` takes the Sentry issue
   URL instead.
 - `externalIssueUrl`: the `url` of the Linear issue, from the `save_issue` response or
-  from the tracker map.
+  from the tracker map. **Pass that `url` as Linear returns it, with the slug of the
+  title. Do not build the URL from the identifier, because Sentry refuses a URL that
+  ends at `/issue/<identifier>`.** Measured 2026-11-04: two such URLs failed with "The
+  App link conflicted with the current association or callback URL". The same two
+  calls returned `linked` with the slug added.
 
 Leave out `appSlug`, because the tool infers it from a Linear URL.
 
