@@ -113,18 +113,24 @@ that is still open after the merge, and usually none is.
    removes the stops for work that stays on the user's machine. A tick is a write that
    teammates see at once.
 3. **Tick the approved boxes, in one write.** Follow the tracker file.
-4. **Open the PR, and name the issue in it.** Write the PR with the pr-descriptions skill.
-   Its "A PR that implements an issue" passage ends the description with one line that names
+4. **Open the PR, and name the issue in it.** Read
+   `${CLAUDE_PLUGIN_ROOT}/skills/implement-plan/references/finish-with-a-draft-pr.md` and
+   follow it, with the line that names the issue. The pr-descriptions skill's
+   "A PR that implements an issue" passage ends the description with that line, which names
    the issue's key. Give that line the closing form that the tracker file gives, such as
    "Fixes ENG-123". Where the user does not want the PR to close the issue, use the tracker
    file's form that links only.
    - The PR description does not copy the criteria, because two copies drift.
+   - Where a CI fix changes the code that a proof ran against, run that proof again. Where the
+     proof now fails, name its box to the user, and propose to untick it. A tick is a write
+     that teammates see, so the user decides.
 5. **Propose a note on the epic.** Propose a note where the work deferred something. Also
    propose one where the work settled a constraint that a later issue must respect. Run the
    write-issue skill's "Revise an issue or an epic" section on the epic, with the note as the
    reason for the revise. Where the issue belongs to no epic, put the note in the report.
 6. **Report** each ticked box, each open item with its reason, and the PR's URL. Also report
-   the note on the epic, where one was saved. Tell the user that a review change to the
+   the note on the epic, where one was saved. Add the items that
+   `finish-with-a-draft-pr.md` reports. Tell the user that a review change to the
    behavior of a ticked criterion needs that criterion's proof to run again.
 
 Leave the issue's status to the tracker's integration with the code host. Set no status from

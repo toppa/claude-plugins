@@ -142,11 +142,19 @@ code to commit.
   Under `none`, fix each finding that is clearly drift. Name every other finding in the final
   report. Do not record an exemption, such as an entry in a check's list of exceptions,
   because an exemption hides the finding from every later run.
+- **Commit the edits that the bullets above made,** before the close and the PR, because the
+  PR holds only committed work. Where the commits include the plan, set its Status line to
+  `done` first. Draft the message with the commit-messages skill. Under `none`, commit
+  without the approval of the message.
 - **Close the issue, where the plan carries an `**Issue:**` line.** Load the implement-issue
   skill. Run its "Close the issue" section for the issue that the line names. The close stops
   for one approval of its ticks, and this stop holds under `none` too.
-- Set the plan's Status line to `done`. Under `none`, a finding in the final report does not
-  hold it back.
+- **Where the plan carries no `**Issue:**` line, offer to finish with a draft PR** in your
+  last message to the user. Where the user agrees, read
+  [finish-with-a-draft-pr.md](references/finish-with-a-draft-pr.md) and follow it. Ask
+  first, because a push and a PR are writes that others see.
+- Set the plan's Status line to `done`, where the commit above did not set it. Under `none`,
+  a finding in the final report does not hold it back.
 - **Under `none`, end with a report to the user.** The report names three things:
   1. Each stop that the plan's text marks, and that the run skipped.
   2. What the user can still review. Each commit of the run is open to review, because no
