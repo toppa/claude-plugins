@@ -36,8 +36,12 @@ closes the step. Finish the current step's completion workflow before you start 
 
 ## Approval mode
 
-The plan's `**Approvals required:**` line sets the approval mode. The value is `each step` or
-`none`. A missing line means `each step`, so an omission never removes a stop.
+The plan's `**Approvals required:**` line sets the approval mode. The value is `each step`,
+`none`, or `unattended`. A missing line means `each step`, so an omission never removes a stop.
+
+`unattended` runs the plan to a draft PR whose checks pass, with a stop only where the user
+must act. Under `unattended`, read [unattended-mode.md](references/unattended-mode.md) before
+the first step, and follow it.
 
 Under `none`, the main session skips these stops for the user:
 
@@ -124,6 +128,8 @@ code to commit.
 
 ## After the final step
 
+Under `unattended`, run these bullets in the order they appear.
+
 - Read the project's CLAUDE.md and README.md, and every standing document CLAUDE.md names.
   Update whatever this work made stale.
 - **Find what cites the plan, before you trim it.** A plan is where the reasoning gets written
@@ -148,14 +154,18 @@ code to commit.
   without the approval of the message.
 - **Close the issue, where the plan carries an `**Issue:**` line.** Load the implement-issue
   skill. Run its "Close the issue" section for the issue that the line names. The close stops
-  for one approval of its ticks, and this stop holds under `none` too.
+  for one approval of its ticks, and this stop holds under `none` too. Under `unattended`, run
+  the close that the implement-issue skill's "Unattended mode" section gives instead.
 - **Where the plan carries no `**Issue:**` line, offer to finish with a draft PR** in your
   last message to the user. Where the user agrees, read
   [finish-with-a-draft-pr.md](references/finish-with-a-draft-pr.md) and follow it. Ask
-  first, because a push and a PR are writes that others see.
+  first, because a push and a PR are writes that others see. Under `unattended`, follow it
+  with no offer.
 - Set the plan's Status line to `done`, where the commit above did not set it. Under `none`,
   a finding in the final report does not hold it back.
-- **Under `none`, end with a report to the user.** The report names three things:
+- **Under `none`, end with a report to the user.** Under `unattended`, these items go into
+  the final report of `finish-with-a-draft-pr.md`, so that the user gets one report. The
+  report names three things:
   1. Each stop that the plan's text marks, and that the run skipped.
   2. What the user can still review. Each commit of the run is open to review, because no
      step stopped for a code review.

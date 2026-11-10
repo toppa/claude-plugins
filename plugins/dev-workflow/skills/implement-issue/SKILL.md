@@ -8,6 +8,7 @@ when_to_use: >-
   Use when you start work on an issue in a tracker such as Linear, Jira, or
   GitHub Issues, and when a plan that names an issue reaches its close. To
   draft or revise an issue, use the `dev-workflow:write-issue` skill.
+argument-hint: "[issue key] [unattended]"
 metadata:
   upstream_repo: none
   origin: >-
@@ -20,7 +21,8 @@ metadata:
 # Implement an issue
 
 The skill takes one issue from the tracker, through the work, to its close. The close proves
-each acceptance criterion, ticks each proven box, and names the issue in the PR.
+each acceptance criterion, ticks each proven box, and names the issue in the PR. Where the
+argument `unattended` follows the issue's key, also follow "Unattended mode".
 
 The write-issue skill defines the **tracker**, the **epic**, and the **profile**. This skill
 reads the profile. It writes a profile only through the write-issue skill's "The first run"
@@ -95,7 +97,8 @@ keeps stays open at the close, with its reason.
 
 The close starts after the last commit of the work. Its ticks come before the PR opens, so
 each tick rests on the code that the PR opens with. A tick after the merge needs a session
-that is still open after the merge, and usually none is.
+that is still open after the merge, and usually none is. The unattended mode moves the ticks
+after the PR, as "Unattended mode" says.
 
 1. **Prove each criterion.** Give each acceptance criterion its proof, or an open item with its
    reason. A **proof** is evidence that someone can check again, such as a spec that passes, a
@@ -111,7 +114,8 @@ that is still open after the merge, and usually none is.
 
    This approval applies in every approval mode of a plan, `none` included. A plan's `none`
    removes the stops for work that stays on the user's machine. A tick is a write that
-   teammates see at once.
+   teammates see at once. The unattended mode keeps this approval, and moves it into the
+   final report.
 3. **Tick the approved boxes, in one write.** Follow the tracker file.
 4. **Open the PR, and name the issue in it.** Read
    `${CLAUDE_PLUGIN_ROOT}/skills/implement-plan/references/finish-with-a-draft-pr.md` and
@@ -120,7 +124,9 @@ that is still open after the merge, and usually none is.
    the issue's key. Give that line the closing form that the tracker file gives, such as
    "Fixes ENG-123". Where the user does not want the PR to close the issue, use the tracker
    file's form that links only.
-   - The PR description does not copy the criteria, because two copies drift.
+   - The PR description does not copy the criteria, because two copies drift. The one
+     exception is the unattended mode's "Acceptance criteria as I read them", which stays only
+     until the criteria move into the issue.
    - Where a CI fix changes the code that a proof ran against, run that proof again. Where the
      proof now fails, name its box to the user, and propose to untick it. A tick is a write
      that teammates see, so the user decides.
@@ -135,6 +141,77 @@ that is still open after the merge, and usually none is.
 
 Leave the issue's status to the tracker's integration with the code host. Set no status from
 this skill. The tracker file says what moves the status.
+
+## Unattended mode
+
+The argument `unattended` after the issue's key, as in
+`/dev-workflow:implement-issue ENG-123 unattended`, runs the issue to a draft PR whose checks
+pass. The user reviews the work once, at the end. Before step 1 of "Workflow", read
+`${CLAUDE_PLUGIN_ROOT}/skills/implement-plan/references/unattended-mode.md` and follow it. That
+file holds the rules that this mode shares with a plan: the stops that stay, the worktree, and
+the decision list. This section adds the rules that are about the issue.
+
+**These stops stay, beside the shared ones,** because each one needs the user:
+
+- The first run, at step 1 of "Workflow", which asks its setup questions once.
+- An open blocker, at step 2.
+- An unready issue, at step 4. Show the revise draft with the stop, so that one approval
+  answers it.
+- A Decision that the plan review leaves.
+- The paste of the issue at step 2, where no tracker file applies.
+
+**Each other stop makes its own decision:**
+
+- A finding about form only, at step 4, goes into the decision list.
+- Criteria that are clear but are not boxes do not stop the run. Leave the issue as it is.
+  Write your reading of the criteria into the PR description, under "Acceptance criteria as I
+  read them". Do not revise the issue first, because the readiness check would then judge
+  criteria that the run wrote, and the author of the issue never agreed to them.
+- At step 6, commit without the approval of the message. On this one rule, this skill
+  overrides the commit-messages skill. A split that you would propose goes into the decision
+  list.
+- A wrong criterion stays an open item with its reason, and its proposed text goes into the
+  final report.
+- The note on the epic goes into the final report.
+
+**The plan** that step 5 writes carries `**Approvals required:** unattended`.
+
+**The branch** takes the name that the tracker file gives for the issue, where it gives one.
+Otherwise it takes the issue's key and a verb phrase.
+
+**The close** runs these steps in place of "Close the issue". The ticks come after the PR
+opens, because the user's review of the draft is the one point where a person checks the
+work.
+
+1. Prove each criterion, as step 1 of "Close the issue" says.
+2. Read `${CLAUDE_PLUGIN_ROOT}/skills/implement-plan/references/finish-with-a-draft-pr.md` and
+   follow it. Name the issue with the closing form where every criterion has a proof. Use the
+   form that links only where an open item remains. Where a fix changes the code that a proof
+   ran against, run the proof again. A failed proof becomes an open item.
+3. Add the issue's items to the final report: each criterion with its proof or its open item,
+   and one question. The question lists each write that waits for the user, with its exact
+   text, and asks for one approval of the batch:
+   - The ticks.
+   - The criteria to save into the issue as ticked boxes, where the issue held them as prose.
+   - Each proposed change to a wrong criterion.
+   - The note on the epic.
+   - Whether the PR closes the issue, where an open item remains.
+
+   The user can take an item out of the batch. Where a review Decision is open, the writes
+   wait for its answer as well.
+4. After the approval, make each approved write. Tick the approved boxes in one write, as the
+   tracker file says. Save each approved text through the write-issue skill's "Save a revise"
+   section, with no review and no approval of its own, because the user approved the exact
+   text in the report. Where the criteria moved into the issue, delete "Acceptance criteria as
+   I read them" from the PR description. Where the user says that the PR closes the issue,
+   change its line to the closing form.
+
+**Where no tracker file applies,** the close differs from that section at three points:
+
+- The PR opens with no closing line.
+- The question of the closing word joins the final question, and the list of results to copy
+  goes into the final report.
+- After the answer, add the closing line to the PR description, where the issue has a key.
 
 ## Where no tracker file applies
 

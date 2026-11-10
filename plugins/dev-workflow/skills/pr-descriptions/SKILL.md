@@ -176,8 +176,10 @@ closing word, such as "Fixes ENG-123". Put the line in a repo's template where i
 passes keep this line. A closing word lets a tracker's integration with the code host close
 the issue when the PR merges. Linear's GitHub integration works this way
 (https://linear.app/docs/github). A PR that delivers only part of the issue names the key with
-a word that links only, such as "Part of ENG-123". The criteria stay in the issue only, because
-a copy in the body drifts from the issue.
+a word that links only, such as "Part of ENG-123". The criteria stay in the issue, because a
+copy in the body drifts from the issue. Where the issue holds no criteria as boxes, the body
+can hold the implementer's reading of them until they move into the issue. The passes keep
+that reading.
 
 ## Rules that outrank brevity
 

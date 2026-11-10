@@ -20,6 +20,9 @@ in Linear. Each tool below carries the last part of its name only, as the write-
 A blocker is open while its `statusType` is not `completed`, `canceled`, or `duplicate`. Each
 team's statuses map to these types, as `list_issue_statuses` shows.
 
+The issue's `gitBranchName` field is the branch name that Linear gives for the issue, such as
+`alex/eng-123-add-order-export`.
+
 ## Read a box
 
 The API returns the description as Markdown. A box that someone ticked in the Linear UI comes
