@@ -81,10 +81,10 @@ tracker" says:
 
 ## The integration link
 
-The Linear integration syncs state through an integration link only. When the Linear
-issue goes to Done, Sentry resolves each linked Sentry issue in the next release. A
-Sentry URL in the Linear issue syncs nothing, and a Linear URL in a Sentry note syncs
-nothing.
+The integration syncs state from Linear to Sentry through an integration link only. When
+the Linear issue goes to Done, Sentry resolves each linked Sentry issue in the next
+release. A Sentry URL in the Linear issue syncs nothing, and a Linear URL in a Sentry note
+syncs nothing.
 
 Make the link with `link_issue`, a Sentry catalog tool. Run it through
 `execute_sentry_tool`. `search_sentry_tools` returns its schema.
@@ -161,11 +161,32 @@ attachments to REL-405, and the REST unlink left them on REL-157. The 2026-09-30
 Duplicate, where Linear moves the attachment itself. Measured 2026-10-21: `unlink_issue`
 also left the attachment on the old Linear issue.
 
+### Archive a linked issue
+
+**Archive a linked Sentry issue only while the `statusType` of its Linear issue is not
+`started`.** Read the Linear status first. Where it is `started`, such as In Progress or In
+Review, leave the Sentry issue unresolved, and record the decision with `add_issue_note`.
+The Done of the Linear issue then resolves the Sentry issue in the next release. A Sentry
+issue counts as linked while a Linear issue still holds its Sentry attachment, also after
+an unlink, because the cancel of 2026-11-10 came after an unlink.
+
+Read the Linear status again after each archive of a linked issue. Where the status
+changed, tell the user before the run ends. Name the Linear issue, its old status, and its
+new status. Do not set the old status back before the user confirms, because the owner of
+the issue decides its status.
+
+The integration also syncs from Sentry to Linear. Measured 2026-11-10: a `forever` archive
+moved the linked Linear issue from In Progress to Canceled within two seconds. A Sentry
+unlink came first, and the Sentry attachment stayed on the Linear issue. Measured
+2026-11-11: three `untilEscalating` archives, with no unlink before them, left their Linear
+issues in Triage and Backlog. Which difference triggers the cancel, the status, the archive
+mode or the unlink, is not known.
+
 ## Reconcile the tracker with Sentry
 
-The integration syncs Done to resolved, and nothing else. So each run compares the two
-systems. It fixes a mismatch that has one correct answer, and it reports a mismatch
-that needs a person.
+The integration syncs a Linear Done to a Sentry resolved, and no other Linear status. So
+each run compares the two systems. It fixes a mismatch that has one correct answer, and
+it reports a mismatch that needs a person.
 
 **The set.** Take the tracker map rows that name a Sentry id, and keep two groups:
 
