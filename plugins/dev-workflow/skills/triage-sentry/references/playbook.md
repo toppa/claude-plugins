@@ -81,6 +81,8 @@ only question that matters. The next occurrence is the proof, so bring it back a
 **A task archives the issue at `untilEscalating`.** The tracker owns the fix from that
 moment, so the issue has no further use in the queue. `untilEscalating` returns it where
 the rate grows, which is the one thing that would change the priority of the task.
+A tracker file can block this archive for a tracker issue in some statuses. Read its section
+on archives before you propose one.
 
 ## 4. The quarantine trigger
 
