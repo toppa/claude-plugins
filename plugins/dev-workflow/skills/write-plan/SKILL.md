@@ -140,10 +140,10 @@ implement-plan skill runs the move before its first step.
   `**Implement with:** the dev-workflow:implement-plan skill.` A later session reads the
   plan without this skill, so the plan itself names the skill that runs it.
 - **Approvals required** — a line under the Implement with line, in every plan:
-  `**Approvals required:** each step` or `**Approvals required:** none`. Write `each step`.
-  Ask for the mode in the approval request. A missing line means `each step`, so an omission
-  never removes a stop. The implement-plan skill's "Approval mode" section says
-  which stops `none` removes.
+  `**Approvals required:** each step`, `none`, or `unattended`. Write `each step`, unless the
+  caller names another mode. Ask for the mode in the approval request. A missing line means
+  `each step`, so an omission never removes a stop. The implement-plan skill's "Approval mode"
+  section says what `none` and `unattended` mean.
 - **Issue** — a line under the Approvals required line, only in a plan that comes from an
   issue: `**Issue:** <key>. Close with the dev-workflow:implement-issue skill's "Close the issue"
   section.` An approval with "clear context" starts the implementation from the plan alone, so
@@ -209,11 +209,21 @@ because the user's request is itself a review.
 
 Ask the user to review and approve the plan. In the request, list each fix from the review
 in one line, and put each decision as a question. List each dropped finding in one line,
-with the reason, so the user can overrule the verdict. Ask for the approval mode,
-`each step` or `none`. Where the user picks `none`, edit the Approvals required line. Then
-stop and wait, even after they approve it. Implementation starts on its own instruction,
-under the implement-plan skill.
+with the reason, so the user can overrule the verdict. Ask for the approval mode:
+`each step`, `none`, or `unattended`. Where the user picks `none`, edit the Approvals required
+line. Then stop and wait, even after they approve it. Implementation starts on its own
+instruction, under the implement-plan skill.
 
-An approval with "clear context" is the one exception. Claude Code then starts a new
+**`unattended` starts the implementation at once, with no stop after the approval.** The
+user chose to leave the run alone.
+
+- Where the user picks `unattended`, edit the line.
+- Where the plan already says `unattended`, because the implement-issue skill wrote it, ask
+  for no approval. Put each fix and each dropped finding in the run's decision list.
+- Where the review leaves a Decision in that plan, ask about it, and ask nothing else. Start
+  the implementation when the user answers.
+- "The first question" still stops, because only the user can name the plan directory.
+
+An approval with "clear context" is the other exception. Claude Code then starts a new
 context with "Implement the following plan", and that message is the instruction to
 implement.

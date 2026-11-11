@@ -54,4 +54,8 @@ The method stays the upstream's: five passes of subtraction, then a short add-ba
   integration does (https://linear.app/docs/github). A PR that delivers only part of the
   issue names the key with a word that links only, such as "Part of ENG-123". The person who
   writes the issue may have no access to the code host, so the criteria stay in the tracker,
-  and a copy in the body drifts.
+  and a copy in the body drifts. One exception: where the issue holds no criteria as boxes,
+  the body can hold the implementer's reading of them until they move into the issue. An
+  implementer that does not stop to revise the issue needs a place to state what it built
+  against. The rule names no other skill, because a standalone install has no other skill to
+  name.
