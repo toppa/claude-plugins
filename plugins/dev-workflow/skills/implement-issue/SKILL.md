@@ -165,6 +165,10 @@ the decision list. This section adds the rules that are about the issue.
 - A Decision that the plan review leaves.
 - The paste of the issue at step 2, where no tracker file applies.
 
+**The readiness check and the worktree's setup stop in one message.** Make the worktree
+while the readiness check of step 4 runs, because the worktree's setup can stop the run too.
+Where both stop, ask in one message.
+
 **Each other stop makes its own decision:**
 
 - A finding about form only, at step 4, goes into the decision list.
