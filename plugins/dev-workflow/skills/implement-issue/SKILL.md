@@ -195,9 +195,9 @@ work.
    follow it. Name the issue with the closing form where every criterion has a proof. Use the
    form that links only where an open item remains. Where a fix changes the code that a proof
    ran against, run the proof again. A failed proof becomes an open item.
-3. Add the issue's items to the final report: each criterion with its proof or its open item,
-   and one question. The question lists each write that waits for the user, with its exact
-   text, and asks for one approval of the batch:
+3. Add the issue's items to the final report: each criterion with its proof or its open item.
+   Add each write that waits for the user, with its exact text, to the one final question that
+   `finish-with-a-draft-pr.md` asks:
    - The ticks.
    - The criteria to save into the issue as ticked boxes, where the issue held them as prose.
    - Each proposed change to a wrong criterion.
@@ -205,14 +205,15 @@ work.
    - The note on the epic.
    - Whether the PR closes the issue, where an open item remains.
 
-   The user can take an item out of the batch. Where a review Decision is open, the writes
-   wait for its answer as well.
-4. After the approval, make each approved write. Tick the approved boxes in one write, as the
-   tracker file says. Save each approved text through the write-issue skill's "Save a revise"
-   section, with no review and no approval of its own, because the user approved the exact
-   text in the report. Where the criteria moved into the issue, delete "Acceptance criteria as
-   I read them" from the PR description. Where the user says that the PR closes the issue,
-   change its line to the closing form.
+   The user can take an item out of the batch.
+4. After the approval, carry out each approved Decision first, as `finish-with-a-draft-pr.md`
+   says. Run again each proof that ran against code that a Decision changed. A failed proof
+   becomes an open item, and its box stays unticked. Then make each approved write. Tick the
+   approved boxes in one write, as the tracker file says. Save each approved text through the
+   write-issue skill's "Save a revise" section, with no review and no approval of its own,
+   because the user approved the exact text in the report. Where the criteria moved into the
+   issue, delete "Acceptance criteria as I read them" from the PR description. Where the user
+   says that the PR closes the issue, change its line to the closing form.
 
 **Where no tracker file applies,** the close differs from that section at three points:
 
