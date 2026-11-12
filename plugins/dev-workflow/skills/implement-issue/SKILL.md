@@ -56,7 +56,7 @@ section.
 
    The issue is unready only where a Defect or a Decision blocks the work. Four kinds of
    finding block the work:
-   - A fact about the code that fails.
+   - A fact about the code that fails, where a criterion, the scope, or the fix depends on it.
    - A criterion with no clear pass or fail, which fails the INVEST letter Testable.
    - An item that fails the INVEST letter Small.
    - A question from the open read that would make the implementer stop and ask.
@@ -66,6 +66,11 @@ section.
      sections, the title, and the wording of a criterion whose pass or fail is clear. The
      author of the issue agreed to that text.
      List each such finding to the user, and propose no revise for it alone.
+   - A fact about the code that fails, where no criterion, scope, or fix depends on it, does
+     not make the issue unready. It still misleads the next reader of the issue. So propose a
+     revise that corrects it, with the finding as the reason, as for an unready issue. Where
+     the issue is also unready, add the finding to the reason of that revise instead. Carry
+     on with the work while the user decides.
    - A missing implementation design does not make an issue unready, because the INVEST
      letter Negotiable leaves the implementation open. Give such a finding the verdict Wrong.
    - Where the issue is unready, propose a refinement. Run the write-issue skill's "Revise an
@@ -163,6 +168,8 @@ the decision list. This section adds the rules that are about the issue.
 **Each other stop makes its own decision:**
 
 - A finding about form only, at step 4, goes into the decision list.
+- A fact about the code that fails, where nothing depends on it, at step 4: its revise goes
+  into the final question, unless the stop for an unready issue carries it.
 - Criteria that are clear but are not boxes do not stop the run. Leave the issue as it is.
   Write your reading of the criteria into the PR description, under "Acceptance criteria as I
   read them". Do not revise the issue first, because the readiness check would then judge
@@ -194,6 +201,7 @@ work.
    - The ticks.
    - The criteria to save into the issue as ticked boxes, where the issue held them as prose.
    - Each proposed change to a wrong criterion.
+   - Each revise from step 4 that corrects a fact about the code.
    - The note on the epic.
    - Whether the PR closes the issue, where an open item remains.
 
