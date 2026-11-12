@@ -56,7 +56,7 @@ section.
 
    The issue is unready only where a Defect or a Decision blocks the work. Four kinds of
    finding block the work:
-   - A fact about the code that fails.
+   - A fact about the code that fails, where a criterion, the scope, or the fix depends on it.
    - A criterion with no clear pass or fail, which fails the INVEST letter Testable.
    - An item that fails the INVEST letter Small.
    - A question from the open read that would make the implementer stop and ask.
@@ -66,6 +66,11 @@ section.
      sections, the title, and the wording of a criterion whose pass or fail is clear. The
      author of the issue agreed to that text.
      List each such finding to the user, and propose no revise for it alone.
+   - A fact about the code that fails, where no criterion, scope, or fix depends on it, does
+     not make the issue unready. It still misleads the next reader of the issue. So propose a
+     revise that corrects it, with the finding as the reason, as for an unready issue. Where
+     the issue is also unready, add the finding to the reason of that revise instead. Carry
+     on with the work while the user decides.
    - A missing implementation design does not make an issue unready, because the INVEST
      letter Negotiable leaves the implementation open. Give such a finding the verdict Wrong.
    - Where the issue is unready, propose a refinement. Run the write-issue skill's "Revise an
@@ -160,9 +165,15 @@ the decision list. This section adds the rules that are about the issue.
 - A Decision that the plan review leaves.
 - The paste of the issue at step 2, where no tracker file applies.
 
+**The readiness check and the worktree's setup stop in one message.** Make the worktree
+while the readiness check of step 4 runs, because the worktree's setup can stop the run too.
+Where both stop, ask in one message.
+
 **Each other stop makes its own decision:**
 
 - A finding about form only, at step 4, goes into the decision list.
+- A fact about the code that fails, where nothing depends on it, at step 4: its revise goes
+  into the final question, unless the stop for an unready issue carries it.
 - Criteria that are clear but are not boxes do not stop the run. Leave the issue as it is.
   Write your reading of the criteria into the PR description, under "Acceptance criteria as I
   read them". Do not revise the issue first, because the readiness check would then judge
@@ -188,23 +199,25 @@ work.
    follow it. Name the issue with the closing form where every criterion has a proof. Use the
    form that links only where an open item remains. Where a fix changes the code that a proof
    ran against, run the proof again. A failed proof becomes an open item.
-3. Add the issue's items to the final report: each criterion with its proof or its open item,
-   and one question. The question lists each write that waits for the user, with its exact
-   text, and asks for one approval of the batch:
+3. Add the issue's items to the final report: each criterion with its proof or its open item.
+   Add each write that waits for the user, with its exact text, to the one final question that
+   `finish-with-a-draft-pr.md` asks:
    - The ticks.
    - The criteria to save into the issue as ticked boxes, where the issue held them as prose.
    - Each proposed change to a wrong criterion.
+   - Each revise from step 4 that corrects a fact about the code.
    - The note on the epic.
    - Whether the PR closes the issue, where an open item remains.
 
-   The user can take an item out of the batch. Where a review Decision is open, the writes
-   wait for its answer as well.
-4. After the approval, make each approved write. Tick the approved boxes in one write, as the
-   tracker file says. Save each approved text through the write-issue skill's "Save a revise"
-   section, with no review and no approval of its own, because the user approved the exact
-   text in the report. Where the criteria moved into the issue, delete "Acceptance criteria as
-   I read them" from the PR description. Where the user says that the PR closes the issue,
-   change its line to the closing form.
+   The user can take an item out of the batch.
+4. After the approval, carry out each approved Decision first, as `finish-with-a-draft-pr.md`
+   says. Run again each proof that ran against code that a Decision changed. A failed proof
+   becomes an open item, and its box stays unticked. Then make each approved write. Tick the
+   approved boxes in one write, as the tracker file says. Save each approved text through the
+   write-issue skill's "Save a revise" section, with no review and no approval of its own,
+   because the user approved the exact text in the report. Where the criteria moved into the
+   issue, delete "Acceptance criteria as I read them" from the PR description. Where the user
+   says that the PR closes the issue, change its line to the closing form.
 
 **Where no tracker file applies,** the close differs from that section at three points:
 

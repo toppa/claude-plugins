@@ -50,12 +50,20 @@ file.
 - **No commit until the review returns,** so that the worktree stays on the PR head while
   the subagent reads it. Where CI fails before then, diagnose the failure, and hold its fix.
 - **One verdict for each finding.** A Wrong finding goes into the decision list with its
-  reason. A Defect gets its fix. A Decision goes into the final report with its options and a
-  recommendation. Ignore the report's advice to a reviewer of another person's PR, such
-  as a verdict to approve.
+  reason. A Defect gets its fix. A Decision becomes an item of the final question, with its
+  options and, where you have one, a recommended option. Ignore the report's advice to a
+  reviewer of another person's PR, such as a verdict to approve.
 - **One push for the review fixes and the held CI fixes.** That push is the first round of
   fixes. Wait for CI on its head, because that head is the one the user reviews. The fix loop
   above then runs as usual. The cold review runs one round only.
-- **The report above is the final report.** It also holds the decision list, and each review
-  Decision as a question. Copy it into the report file, because the user can review in a later
-  session. Where an issue's close runs this file, the close adds its own items to this report.
+- **The report above is the final report.** It also holds the decision list. Copy it into the
+  report file, because the user can review in a later session. Where an issue's close runs
+  this file, the close adds its own items to this report.
+- **One final question, so that the user answers once.** The question lists each review
+  Decision with its options and its recommended option, and it ends: "Approve the batch, with
+  my recommendation on each Decision? Name any item to change." Where a Decision has no
+  recommendation, its item says so, and the work that depends on it waits for the user's
+  answer. Where an issue's close runs this file, the close adds its writes to this question.
+  After the approval, carry out the approved option of each Decision before any other write.
+  Where the option changes code, fold the fix into the commit that it belongs to. Push the
+  fold, and wait for CI on the new head.

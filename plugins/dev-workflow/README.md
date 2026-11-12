@@ -74,8 +74,9 @@ You can use them in any typical software development workflow, in any programmin
   your session.
 - Before the run ends, an agent with no conversation context reviews the PR with the
   `pr-review` skill. The run fixes each defect that the review finds.
-- The run ends with one report: the PR link, the state of each check, each decision that the
-  run made in place of a stop, and each question that only you can settle. It saves a copy
+- The run ends with one report: the PR link, the state of each check, and each decision that
+  the run made in place of a stop. The report asks one question, which approves its
+  recommended answer to each question that only you can settle. It saves a copy
   in the project's git-ignored `tmp/` directory (or in `~/tmp/`), so that you can review it
   in a later session.
 
@@ -117,8 +118,8 @@ You can use them in any typical software development workflow, in any programmin
 - Where the criteria are clear but are not checkboxes, it leaves the issue as it is, and it
   writes its reading of the criteria in the PR description.
 - It changes the issue only after you review the draft PR. The final report lists each proof,
-  and it asks one question, which approves the ticks and every other pending update as a
-  batch.
+  and it asks one question. The question approves the ticks, every other pending update, and
+  its recommended answer to each review decision, as a batch.
 
 ### [commit-messages](skills/commit-messages/SKILL.md)
 
