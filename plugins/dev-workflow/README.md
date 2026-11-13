@@ -43,10 +43,10 @@ You can use them in any typical software development workflow, in any programmin
 - When invoked for the first time in a project, it asks where plans for the project are
   stored, and records the location (so you can decide whether to put them under version
   control).
-- It asks you to pick the approval mode when you approve the plan: `each step`, `none`, or
-  `unattended` (see `implement-plan` below). With `unattended`, the implementation starts as
+- It asks you to pick the approval mode when you approve the plan: `each step`, `before push`, or
+  `draft PR` (see `implement-plan` below). With `draft PR`, the implementation starts as
   soon as you approve.
-- When `implement-issue` writes the plan in its unattended mode, it does not ask for your
+- When `implement-issue` writes the plan in its `draft PR` mode, it does not ask for your
   approval. It stops only for the first-run question above, and for a review finding that
   only you can settle.
 
@@ -56,7 +56,7 @@ You can use them in any typical software development workflow, in any programmin
 
 - An agent does the work of each step, and the skill closes the step with checks, a review,
   a plan progress update, and a commit.
-- It reads the `Approvals required:` line of the plan to decide whether it stops for your
+- It reads the `Approval mode:` line of the plan to decide whether it stops for your
   review after each step.
 - After the final step, it removes implementation detail from the plan (and if there is a
   linked issue, it proves and checks off the issue's acceptance criteria via
@@ -65,9 +65,9 @@ You can use them in any typical software development workflow, in any programmin
   PR description names the issue with a closing line such as "Fixes ENG-123", so the issue
   closes when the PR merges. When the plan has no issue, it asks you whether to open a draft
   PR.
-- With `Approvals required: unattended`, it runs the whole plan to a draft PR whose CI checks
+- With `Approval mode: draft PR`, it runs the whole plan to a draft PR whose CI checks
   pass, so that you review the work once, at the end. It does the work in a new git worktree.
-- In the unattended mode, it stops only where you must act: a question that it cannot settle
+- In the `draft PR` mode, it stops only where you must act: a question that it cannot settle
   alone, a problem that remains after two rounds of fixes, and a permission block (it gives
   you the command to run with `!`). It can also ask, once per project, whether you commit
   your plans. How often permission prompts stop the run depends on the permission mode of
@@ -108,8 +108,8 @@ You can use them in any typical software development workflow, in any programmin
   (e.g. it needs numerous commits, involves code design decisions, etc.), it hands that work to
   `write-plan`.
 - It uses the same configuration as `write-issue`.
-- To run an issue to a draft PR in `implement-plan`'s unattended mode (see above), add
-  `unattended` after the issue key: `/dev-workflow:implement-issue ENG-123 unattended`. Any
+- To run an issue to a draft PR in `implement-plan`'s `draft PR` mode (see above), add
+  `draft-pr` after the issue key: `/dev-workflow:implement-issue ENG-123 draft-pr`. Any
   plan that it writes for the issue uses the same mode.
 - In this mode, it also stops for the first-run setup, an open blocker, an issue that is not
   ready (with a revised draft of the issue for your approval), and a review finding on its

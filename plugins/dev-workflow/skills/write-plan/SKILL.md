@@ -97,7 +97,7 @@ Plan mode chooses the plan file's path, and no setting changes it. Plan mode all
 to that file only, and `ExitPlanMode` reads the plan from it. So write the plan to plan
 mode's file, and move the file after approval.
 
-Put a **Move pending** block below the Approvals required line, and below the Issue line where
+Put a **Move pending** block below the Approval mode line, and below the Issue line where
 the plan carries one. The block holds three values:
 
 ```
@@ -139,12 +139,12 @@ implement-plan skill runs the move before its first step.
 - **Implement with** — a line under the Status line, in every plan:
   `**Implement with:** the dev-workflow:implement-plan skill.` A later session reads the
   plan without this skill, so the plan itself names the skill that runs it.
-- **Approvals required** — a line under the Implement with line, in every plan:
-  `**Approvals required:** each step`, `none`, or `unattended`. Write `each step`, unless the
+- **Approval mode** — a line under the Implement with line, in every plan:
+  `**Approval mode:** each step`, `before push`, or `draft PR`. Write `each step`, unless the
   caller names another mode. Ask for the mode in the approval request. A missing line means
   `each step`, so an omission never removes a stop. The implement-plan skill's "Approval mode"
-  section says what `none` and `unattended` mean.
-- **Issue** — a line under the Approvals required line, only in a plan that comes from an
+  section says what `before push` and `draft PR` mean.
+- **Issue** — a line under the Approval mode line, only in a plan that comes from an
   issue: `**Issue:** <key>. Close with the dev-workflow:implement-issue skill's "Close the issue"
   section.` An approval with "clear context" starts the implementation from the plan alone, so
   the plan itself names the issue and the close that runs after the final step.
@@ -210,15 +210,15 @@ because the user's request is itself a review.
 Ask the user to review and approve the plan. In the request, list each fix from the review
 in one line, and put each decision as a question. List each dropped finding in one line,
 with the reason, so the user can overrule the verdict. Ask for the approval mode:
-`each step`, `none`, or `unattended`. Where the user picks `none`, edit the Approvals required
-line. Then stop and wait, even after they approve it. Implementation starts on its own
-instruction, under the implement-plan skill.
+`each step`, `before push`, or `draft PR`. Where the user picks `before push`, edit the
+Approval mode line. Then stop and wait, even after they approve it. Implementation starts on
+its own instruction, under the implement-plan skill.
 
-**`unattended` starts the implementation at once, with no stop after the approval.** The
+**`draft PR` starts the implementation at once, with no stop after the approval.** The
 user chose to leave the run alone.
 
-- Where the user picks `unattended`, edit the line.
-- Where the plan already says `unattended`, because the implement-issue skill wrote it, ask
+- Where the user picks `draft PR`, edit the line.
+- Where the plan already says `draft PR`, because the implement-issue skill wrote it, ask
   for no approval. Put each fix and each dropped finding in the run's decision list.
 - Where the review leaves a Decision in that plan, ask about it, and ask nothing else. Start
   the implementation when the user answers.

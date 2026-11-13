@@ -1,15 +1,15 @@
-# Unattended mode
+# The `draft PR` mode
 
-The unattended mode runs the work to a draft PR whose checks pass, and the user reviews the
-work once, at the end. A plan's `**Approvals required:** unattended` line sets the mode, and so
-does the argument `unattended` to the implement-issue skill. This file holds the rules that a
+The `draft PR` mode runs the work to a draft PR whose checks pass, and the user reviews the
+work once, at the end. A plan's `**Approval mode:** draft PR` line sets the mode, and so
+does the argument `draft-pr` to the implement-issue skill. This file holds the rules that a
 plan run and an issue run share in the mode.
 
 - **Each removed stop makes its own decision, and the decision list records it.** In a plan
-  run, the mode removes every stop that `none` removes. So each rule for `none` in the
-  implement-plan skill holds here too, except where a rule names `unattended`. For an issue
-  with no plan, the implement-issue skill's "Unattended mode" section names the stops that the
-  mode removes.
+  run, the mode removes every stop that `before push` removes. So each rule for `before push`
+  in the implement-plan skill holds here too, except where a rule names `draft PR`. For an
+  issue with no plan, the implement-issue skill's "The `draft PR` mode" section names the
+  stops that the mode removes.
 - **A stop only where the user must act:**
   - A real question that the run cannot settle alone, such as an ambiguity in the plan.
   - A problem that remains after two rounds of fixes. **Two is a house heuristic with no
@@ -30,7 +30,7 @@ plan run and an issue run share in the mode.
   they say nothing about worktrees, set up what the checks need when the need appears. Record
   each setup step in the decision list, so that the user can add it to the project's
   instructions. For a plan with no issue, name the branch after the verb phrase in the plan's
-  file name. For an issue, the implement-issue skill's "Unattended mode" section names the
+  file name. For an issue, the implement-issue skill's "The `draft PR` mode" section names the
   branch.
 - **A decision list in the run's report file, written from the first decision on.** A run
   that starts again after a cleared context reads the list back from the file. The file's name

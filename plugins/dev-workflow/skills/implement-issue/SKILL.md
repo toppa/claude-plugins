@@ -8,7 +8,7 @@ when_to_use: >-
   Use when you start work on an issue in a tracker such as Linear, Jira, or
   GitHub Issues, and when a plan that names an issue reaches its close. To
   draft or revise an issue, use the `dev-workflow:write-issue` skill.
-argument-hint: "[issue key] [unattended]"
+argument-hint: "[issue key] [draft-pr]"
 metadata:
   upstream_repo: none
   origin: >-
@@ -22,7 +22,7 @@ metadata:
 
 The skill takes one issue from the tracker, through the work, to its close. The close proves
 each acceptance criterion, ticks each proven box, and names the issue in the PR. Where the
-argument `unattended` follows the issue's key, also follow "Unattended mode".
+argument `draft-pr` follows the issue's key, also follow "The `draft PR` mode".
 
 The write-issue skill defines the **tracker**, the **epic**, and the **profile**. This skill
 reads the profile. It writes a profile only through the write-issue skill's "The first run"
@@ -102,8 +102,8 @@ keeps stays open at the close, with its reason.
 
 The close starts after the last commit of the work. Its ticks come before the PR opens, so
 each tick rests on the code that the PR opens with. A tick after the merge needs a session
-that is still open after the merge, and usually none is. The unattended mode moves the ticks
-after the PR, as "Unattended mode" says.
+that is still open after the merge, and usually none is. The `draft PR` mode moves the ticks
+after the PR, as "The `draft PR` mode" says.
 
 1. **Prove each criterion.** Give each acceptance criterion its proof, or an open item with its
    reason. A **proof** is evidence that someone can check again, such as a spec that passes, a
@@ -117,9 +117,9 @@ after the PR, as "Unattended mode" says.
    issue closes it at the merge, with the open box still open. A box that the user takes out
    of the batch stays open.
 
-   This approval applies in every approval mode of a plan, `none` included. A plan's `none`
-   removes the stops for work that stays on the user's machine. A tick is a write that
-   teammates see at once. The unattended mode keeps this approval, and moves it into the
+   This approval applies in every approval mode of a plan, `before push` included. A plan's
+   `before push` removes the stops for work that stays on the user's machine. A tick is a write
+   that teammates see at once. The `draft PR` mode keeps this approval, and moves it into the
    final report.
 3. **Tick the approved boxes, in one write.** Follow the tracker file.
 4. **Open the PR, and name the issue in it.** Read
@@ -130,7 +130,7 @@ after the PR, as "Unattended mode" says.
    "Fixes ENG-123". Where the user does not want the PR to close the issue, use the tracker
    file's form that links only.
    - The PR description does not copy the criteria, because two copies drift. The one
-     exception is the unattended mode's "Acceptance criteria as I read them", which stays only
+     exception is the `draft PR` mode's "Acceptance criteria as I read them", which stays only
      until the criteria move into the issue.
    - Where a CI fix changes the code that a proof ran against, run that proof again. Where the
      proof now fails, name its box to the user, and propose to untick it. A tick is a write
@@ -147,12 +147,12 @@ after the PR, as "Unattended mode" says.
 Leave the issue's status to the tracker's integration with the code host. Set no status from
 this skill. The tracker file says what moves the status.
 
-## Unattended mode
+## The `draft PR` mode
 
-The argument `unattended` after the issue's key, as in
-`/dev-workflow:implement-issue ENG-123 unattended`, runs the issue to a draft PR whose checks
+The argument `draft-pr` after the issue's key, as in
+`/dev-workflow:implement-issue ENG-123 draft-pr`, runs the issue to a draft PR whose checks
 pass. The user reviews the work once, at the end. Before step 1 of "Workflow", read
-`${CLAUDE_PLUGIN_ROOT}/skills/implement-plan/references/unattended-mode.md` and follow it. That
+`${CLAUDE_PLUGIN_ROOT}/skills/implement-plan/references/draft-pr-mode.md` and follow it. That
 file holds the rules that this mode shares with a plan: the stops that stay, the worktree, and
 the decision list. This section adds the rules that are about the issue.
 
@@ -185,7 +185,7 @@ Where both stop, ask in one message.
   final report.
 - The note on the epic goes into the final report.
 
-**The plan** that step 5 writes carries `**Approvals required:** unattended`.
+**The plan** that step 5 writes carries `**Approval mode:** draft PR`.
 
 **The branch** takes the name that the tracker file gives for the issue, where it gives one.
 Otherwise it takes the issue's key and a verb phrase.

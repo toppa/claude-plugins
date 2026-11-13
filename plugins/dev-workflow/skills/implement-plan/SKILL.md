@@ -36,25 +36,27 @@ closes the step. Finish the current step's completion workflow before you start 
 
 ## Approval mode
 
-The plan's `**Approvals required:**` line sets the approval mode. The value is `each step`,
-`none`, or `unattended`. A missing line means `each step`, so an omission never removes a stop.
+The plan's `**Approval mode:**` line sets the approval mode. The value is `each step`,
+`before push`, or `draft PR`. A missing line means `each step`, so an omission never removes
+a stop.
 
-`unattended` runs the plan to a draft PR whose checks pass, with a stop only where the user
-must act. Under `unattended`, read [unattended-mode.md](references/unattended-mode.md) before
+`draft PR` runs the plan to a draft PR whose checks pass, with a stop only where the user
+must act. Under `draft PR`, read [draft-pr-mode.md](references/draft-pr-mode.md) before
 the first step, and follow it.
 
-Under `none`, the main session skips these stops for the user:
+Under `before push`, the main session skips these stops for the user:
 
 - The code review by the user, in step 2 of the "Step completion workflow".
 - The approval of the commit message, in step 5.
 - Every stop that the plan's text marks, such as a step that says to stop for the user.
 
-Under `none`, the main session still stops for a real question that it cannot settle alone.
-Examples are an ambiguity in the plan, a departure from the plan that the main session cannot
-settle, and a problem that remains after two rounds of fixes.
+Under `before push`, the main session still stops for a real question that it cannot settle
+alone. Examples are an ambiguity in the plan, a departure from the plan that the main session
+cannot settle, and a problem that remains after two rounds of fixes.
 
-Under `none`, the main session also stops for the approval of the ticks in the implement-issue
-skill's "Close the issue" section. That section says why `none` does not remove this stop.
+Under `before push`, the main session also stops for the approval of the ticks in the
+implement-issue skill's "Close the issue" section. That section says why `before push` does
+not remove this stop.
 
 Where the user changes the mode during the run, edit the line in the plan. The mode then
 survives a cleared context.
@@ -100,8 +102,8 @@ code to commit.
    CLAUDE.md routes none, skip that. Ask the user to review the code. Name where the code
    departed from the plan. Wait for them to confirm that the review is finished and the code
    is approved. Until they confirm, leave the plan unchanged and draft no commit message.
-   Under `none`, skip the review by the user. Go on to step 3 after the checks pass and you
-   act on any report from the reviewer.
+   Under `before push`, skip the review by the user. Go on to step 3 after the checks pass and
+   you act on any report from the reviewer.
 
    The main session makes a fix that adds little to its context, such as a fix whose exact
    text a review wrote, or a change of a few lines of prose. A new agent of the kind that
@@ -121,14 +123,14 @@ code to commit.
    write-plan skill's "Standing documents outrank the plan" section names them. The
    closing pass below is the backstop, and not the first opportunity.
 5. **Commit.** Draft the message with the commit-messages skill, which also covers the
-   approval the message needs before `git commit` runs. Under `none`, run `git commit`
+   approval the message needs before `git commit` runs. Under `before push`, run `git commit`
    without that approval. On this one rule, this skill overrides the commit-messages skill.
    Include every standing document this step changed in the commit. Include the plan where
    "Before the first step" found that the commits include it.
 
 ## After the final step
 
-Under `unattended`, run these bullets in the order they appear.
+Under `draft PR`, run these bullets in the order they appear.
 
 - Read the project's CLAUDE.md and README.md, and every standing document CLAUDE.md names.
   Update whatever this work made stale.
@@ -145,25 +147,26 @@ Under `unattended`, run these bullets in the order they appear.
   the user about each finding that is not clearly drift. Where CLAUDE.md names no check, skip
   this bullet.
 
-  Under `none`, fix each finding that is clearly drift. Name every other finding in the final
-  report. Do not record an exemption, such as an entry in a check's list of exceptions,
+  Under `before push`, fix each finding that is clearly drift. Name every other finding in the
+  final report. Do not record an exemption, such as an entry in a check's list of exceptions,
   because an exemption hides the finding from every later run.
 - **Commit the edits that the bullets above made,** before the close and the PR, because the
   PR holds only committed work. Where the commits include the plan, set its Status line to
-  `done` first. Draft the message with the commit-messages skill. Under `none`, commit
+  `done` first. Draft the message with the commit-messages skill. Under `before push`, commit
   without the approval of the message.
 - **Close the issue, where the plan carries an `**Issue:**` line.** Load the implement-issue
   skill. Run its "Close the issue" section for the issue that the line names. The close stops
-  for one approval of its ticks, and this stop holds under `none` too. Under `unattended`, run
-  the close that the implement-issue skill's "Unattended mode" section gives instead.
+  for one approval of its ticks, and this stop holds under `before push` too. Under
+  `draft PR`, run the close that the implement-issue skill's "The `draft PR` mode" section
+  gives instead.
 - **Where the plan carries no `**Issue:**` line, offer to finish with a draft PR** in your
   last message to the user. Where the user agrees, read
   [finish-with-a-draft-pr.md](references/finish-with-a-draft-pr.md) and follow it. Ask
-  first, because a push and a PR are writes that others see. Under `unattended`, follow it
+  first, because a push and a PR are writes that others see. Under `draft PR`, follow it
   with no offer.
-- Set the plan's Status line to `done`, where the commit above did not set it. Under `none`,
-  a finding in the final report does not hold it back.
-- **Under `none`, end with a report to the user.** Under `unattended`, these items go into
+- Set the plan's Status line to `done`, where the commit above did not set it. Under
+  `before push`, a finding in the final report does not hold it back.
+- **Under `before push`, end with a report to the user.** Under `draft PR`, these items go into
   the final report of `finish-with-a-draft-pr.md`, so that the user gets one report. The
   report names three things:
   1. Each stop that the plan's text marks, and that the run skipped.
