@@ -32,6 +32,7 @@ points at nothing. So an ADR states the fact that the commit holds, or it cites 
 | [0019](0019-the-adr-bar-tests-the-cost-of-a-reversal-and-an-open-question-waits-in-its-work.md) | The ADR bar tests the cost of a reversal, and an open question waits in its work | 2026-10-25 |
 | [0020](0020-the-public-repository-starts-with-one-commit-and-the-plans-live-in-a-private-repository.md) | The public repository starts with one commit, and the plans live in a private repository | 2026-10-25 |
 | [0021](0021-the-guide-ships-in-the-standing-documents-plugin-with-one-version-in-the-guide-plugin-json-and-the-tag.md) | The guide ships in the `standing-documents` plugin, with one version in the guide, `plugin.json`, and the tag | 2026-10-25 |
+| [0022](0022-a-stop-is-a-review-publish-or-blocking-stop-and-the-approval-mode-names-where-the-user-approves.md) | A stop is a review, publish, or blocking stop, and the approval mode names where the user approves | 2026-11-13 |
 
 An empty date means the record never gave one.
 
