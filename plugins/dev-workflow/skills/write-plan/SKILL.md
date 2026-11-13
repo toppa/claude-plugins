@@ -171,6 +171,13 @@ implement-plan skill runs the move before its first step.
   - Name several agents where one job crosses two agents' scopes, and one agent's report
     feeds the next. The last agent proves the outcome of the whole step. Split such a job
     into two steps only where each half passes its checks alone.
+  - **A stop label** — a line under the step, for each point where the step tells the run to
+    wait for the user. It has one of two forms:
+    `**Review stop:** <what the user looks at>`, or
+    `**Blocking stop:** <what the user decides, and what the run must have before the question>`.
+    A stop with no label is a blocking stop. A plan adds no publish stop, because the skills
+    own each one. The implement-plan skill's "Approval mode" section defines the kinds of stop,
+    and says what each mode does with each kind.
 
 To draw the boundary between one step and the next, use the organize-commits skill. Its
 "Separate semantic changes from structural refactors" and "Walk through bundled changes
@@ -210,7 +217,9 @@ because the user's request is itself a review.
 Ask the user to review and approve the plan. In the request, list each fix from the review
 in one line, and put each decision as a question. List each dropped finding in one line,
 with the reason, so the user can overrule the verdict. Ask for the approval mode:
-`each step`, `before push`, or `draft PR`. Where the user picks `before push`, edit the
+`each step`, `before push`, or `draft PR`. Where the plan has a blocking stop, name each one
+beside that question: "This plan has a blocking stop at step N, so a `draft PR` run stops
+there." The user can then pick `before push`. Where the user picks `before push`, edit the
 Approval mode line. Then stop and wait, even after they approve it. Implementation starts on
 its own instruction, under the implement-plan skill.
 

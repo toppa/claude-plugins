@@ -19,8 +19,9 @@ with no offer first, and "In the `draft PR` mode" below adds its rules.
   failure as the diff's, because the other guess can leave a defect in the PR.
 - **Each fix folded into the commit that it belongs to, and seen by the user before the
   push.** A `fixup!` commit has no message to approve, so without this stop a fix reaches the
-  PR unseen. Where the approval mode is `before push` or `draft PR`, skip the stop, because the
-  user chose there not to review code. Where the session's permissions block the force-push,
+  PR unseen. This stop is a review stop, as the implement-plan skill's "Approval mode" section
+  defines it. So where the approval mode is `before push` or `draft PR`, skip the stop, because
+  the user chose there not to review code. Where the session's permissions block the force-push,
   stop, and give the user the force-push command to run with `!`. Do not push the `fixup!`
   commits instead, because a squash before the merge then costs a second force-push, and a
   CI check can fail on a `fixup!` commit. Where a failure remains after two rounds of fixes,

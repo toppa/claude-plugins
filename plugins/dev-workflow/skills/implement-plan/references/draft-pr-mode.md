@@ -6,18 +6,17 @@ does the argument `draft-pr` to the implement-issue skill. This file holds the r
 plan run and an issue run share in the mode.
 
 - **Each removed stop makes its own decision, and the decision list records it.** In a plan
-  run, the mode removes every stop that `before push` removes. So each rule for `before push`
-  in the implement-plan skill holds here too, except where a rule names `draft PR`. For an
-  issue with no plan, the implement-issue skill's "The `draft PR` mode" section names the
-  stops that the mode removes.
-- **A stop only where the user must act:**
-  - A real question that the run cannot settle alone, such as an ambiguity in the plan.
-  - A problem that remains after two rounds of fixes. **Two is a house heuristic with no
-    external source.**
+  run, the table in the implement-plan skill's "Approval mode" section says which kinds of
+  stop the mode removes. Each other rule for `before push` in that skill holds here too,
+  except where a rule names `draft PR`. For an issue with no plan, the implement-issue skill's
+  "The `draft PR` mode" section names the stops that the mode removes.
+- **A stop only where the user must act.** These are the blocking stops, which the
+  implement-plan skill's "Approval mode" section defines. The definition does not hold these
+  details:
   - The question whether the project commits its plans, in the implement-plan skill's "Before
-    the first step" section. It comes once for each project.
-  - A permission block that the run cannot work around. The stop gives the command for the
-    user to run with `!`.
+    the first step" section, comes once for each project.
+  - A permission block counts only where the run cannot work around it. The stop gives the
+    command for the user to run with `!`.
 - **Work that the session's permissions let through.** Run each test the way the project's
   instructions say, so that no process stays behind, such as with an environment variable
   that turns off a preloader. Where a leftover process still blocks a test, stop as for a

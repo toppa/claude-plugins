@@ -46,6 +46,10 @@ You can use them in any typical software development workflow, in any programmin
 - It asks you to pick the approval mode when you approve the plan: `each step`, `before push`, or
   `draft PR` (see `implement-plan` below). With `draft PR`, the implementation starts as
   soon as you approve.
+- To make the run stop for you in a step, the plan puts a label under the step:
+  `**Review stop:** <what you look at>`, or `**Blocking stop:** <what you decide>`. A stop
+  with no label counts as a blocking stop, so a stop that the plan forgets to label is never
+  skipped.
 - When `implement-issue` writes the plan in its `draft PR` mode, it does not ask for your
   approval. It stops only for the first-run question above, and for a review finding that
   only you can settle.
@@ -58,6 +62,8 @@ You can use them in any typical software development workflow, in any programmin
   a plan progress update, and a commit.
 - It reads the `Approval mode:` line of the plan to decide whether it stops for your
   review after each step.
+- In every mode, it stops for a blocking stop, where the run cannot go on without you (such
+  as a decision that the plan marks).
 - After the final step, it removes implementation detail from the plan (and if there is a
   linked issue, it proves and checks off the issue's acceptance criteria via
   `implement-issue`).
@@ -67,9 +73,9 @@ You can use them in any typical software development workflow, in any programmin
   PR.
 - With `Approval mode: draft PR`, it runs the whole plan to a draft PR whose CI checks
   pass, so that you review the work once, at the end. It does the work in a new git worktree.
-- In the `draft PR` mode, it stops only where you must act: a question that it cannot settle
-  alone, a problem that remains after two rounds of fixes, and a permission block (it gives
-  you the command to run with `!`). It can also ask, once per project, whether you commit
+- In the `draft PR` mode, it stops only where you must act: a blocking stop that the plan
+  marks, a question that it cannot settle alone, a problem that remains after two rounds of
+  fixes, and a permission block (it gives you the command to run with `!`). It can also ask, once per project, whether you commit
   your plans. How often permission prompts stop the run depends on the permission mode of
   your session.
 - Before the run ends, an agent with no conversation context reviews the PR with the

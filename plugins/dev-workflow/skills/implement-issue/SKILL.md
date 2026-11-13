@@ -43,8 +43,8 @@ section.
    - The epic's description, where the issue belongs to an epic.
    - The status of each issue that blocks this issue.
 
-   Where an open issue blocks this issue, stop. Name the blocker to the user, and ask
-   whether to wait for it or to start now.
+   Where an open issue blocks this issue, make a blocking stop. Name the blocker to the user,
+   and ask whether to wait for it or to start now.
 3. **Read the standing documents.** Read the project's CLAUDE.md, and each standing document
    that it names. The write-plan skill's "Standing documents outrank the plan" section says
    what makes a document standing. Do the work against the terms and the rules that these
@@ -117,10 +117,10 @@ after the PR, as "The `draft PR` mode" says.
    issue closes it at the merge, with the open box still open. A box that the user takes out
    of the batch stays open.
 
-   This approval applies in every approval mode of a plan, `before push` included. A plan's
-   `before push` removes the stops for work that stays on the user's machine. A tick is a write
-   that teammates see at once. The `draft PR` mode keeps this approval, and moves it into the
-   final report.
+   This approval is a publish stop, as the implement-plan skill's "Approval mode" section
+   defines it, because a tick is a write that teammates see at once. So it applies in every
+   approval mode of a plan, `before push` included. The `draft PR` mode keeps this approval,
+   and moves it into the final report.
 3. **Tick the approved boxes, in one write.** Follow the tracker file.
 4. **Open the PR, and name the issue in it.** Read
    `${CLAUDE_PLUGIN_ROOT}/skills/implement-plan/references/finish-with-a-draft-pr.md` and
@@ -138,7 +138,8 @@ after the PR, as "The `draft PR` mode" says.
 5. **Propose a note on the epic.** Propose a note where the work deferred something. Also
    propose one where the work settled a constraint that a later issue must respect. Run the
    write-issue skill's "Revise an issue or an epic" section on the epic, with the note as the
-   reason for the revise. Where the issue belongs to no epic, put the note in the report.
+   reason for the revise. The approval of the note is a publish stop. Where the issue belongs
+   to no epic, put the note in the report.
 6. **Report** each ticked box, each open item with its reason, and the PR's URL. Also report
    the note on the epic, where one was saved. Add the items that
    `finish-with-a-draft-pr.md` reports. Tell the user that a review change to the
@@ -156,7 +157,8 @@ pass. The user reviews the work once, at the end. Before step 1 of "Workflow", r
 file holds the rules that this mode shares with a plan: the stops that stay, the worktree, and
 the decision list. This section adds the rules that are about the issue.
 
-**These stops stay, beside the shared ones,** because each one needs the user:
+**These blocking stops stay, beside the shared ones,** because each one needs the user. The
+implement-plan skill's "Approval mode" section defines the kind. The stops:
 
 - The first run, at step 1 of "Workflow", which asks its setup questions once.
 - An open blocker, at step 2.
@@ -167,7 +169,7 @@ the decision list. This section adds the rules that are about the issue.
 
 **The readiness check and the worktree's setup stop in one message.** Make the worktree
 while the readiness check of step 4 runs, because the worktree's setup can stop the run too.
-Where both stop, ask in one message.
+Each of these is a blocking stop. Where both stop, ask in one message.
 
 **Each other stop makes its own decision:**
 
