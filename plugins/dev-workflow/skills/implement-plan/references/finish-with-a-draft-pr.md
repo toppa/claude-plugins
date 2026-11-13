@@ -2,8 +2,8 @@
 
 This file ends the work at a draft PR whose checks pass, and whose description agrees with
 CI. It runs at the end of a plan with no issue where the user agrees, at the close of an
-issue, and where the user asks for it. In the unattended mode, it runs after the final step
-with no offer first, and "In the unattended mode" below adds its rules.
+issue, and where the user asks for it. In the `draft PR` mode, it runs after the final step
+with no offer first, and "In the `draft PR` mode" below adds its rules.
 
 - **A draft PR, written with the pr-descriptions skill.** Where an issue's close runs this
   file, the close gives the line that names the issue.
@@ -19,8 +19,9 @@ with no offer first, and "In the unattended mode" below adds its rules.
   failure as the diff's, because the other guess can leave a defect in the PR.
 - **Each fix folded into the commit that it belongs to, and seen by the user before the
   push.** A `fixup!` commit has no message to approve, so without this stop a fix reaches the
-  PR unseen. Where the approval mode is `none` or `unattended`, skip the stop, because the
-  user chose there not to review code. Where the session's permissions block the force-push,
+  PR unseen. This stop is a review stop, as the implement-plan skill's "Approval mode" section
+  defines it. So where the approval mode is `before push` or `draft PR`, skip the stop, because
+  the user chose there not to review code. Where the session's permissions block the force-push,
   stop, and give the user the force-push command to run with `!`. Do not push the `fixup!`
   commits instead, because a squash before the merge then costs a second force-push, and a
   CI check can fail on a `fixup!` commit. Where a failure remains after two rounds of fixes,
@@ -31,9 +32,9 @@ with no offer first, and "In the unattended mode" below adds its rules.
   says to report. Where an issue's close runs this file, the close's "Report" step holds
   these items, so that the user gets one report.
 
-## In the unattended mode
+## In the `draft PR` mode
 
-[unattended-mode.md](unattended-mode.md) defines the mode, the decision list, and the report
+[draft-pr-mode.md](draft-pr-mode.md) defines the mode, the decision list, and the report
 file.
 
 - **A cold review of the PR, in a subagent that starts when the PR opens,** in parallel with
