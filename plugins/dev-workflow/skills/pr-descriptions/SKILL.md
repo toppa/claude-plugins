@@ -114,13 +114,17 @@ tests.
   - a decision that could have gone another way and is expensive to reverse
   - a blast radius larger than the diff suggests
   - something deliberately left undone that looks like an oversight
+  - the cause of a bug that the PR fixes, and the fix, because the diff shows the new
+    code and not why the old code failed
 - **Place:** would a commit in `git log <base>..HEAD` surprise a reviewer who read only
   the Summary? Then add one sentence that names how the commits relate, not what each
   one does. A PR with one commit needs no place sentence, because its commit message
   places it. Sometimes only "this PR also does X" explains the commit. Then the commit
   may be out of scope. Name it in the report, and leave it out of the body.
 
-Nothing else comes back. Each addition is one sentence, and it goes in Details.
+Nothing else comes back. Each addition is one sentence, and it goes in Details. A bug's
+cause and its fix take one sentence each: the cause names the old state, and the fix
+names the new state.
 
 ## The title
 
