@@ -59,3 +59,9 @@ The method stays the upstream's: five passes of subtraction, then a short add-ba
   implementer that does not stop to revise the issue needs a place to state what it built
   against. The rule names no other skill, because a standalone install has no other skill to
   name.
+- **Added: pass 5 brings back the cause of a bug that the PR fixes, and the fix. Example 3
+  now shows them in Details.** Upstream has no source for this. Pass 2 deletes explanations
+  of how the code works, and nothing in pass 5 brought the cause back. Example 3, a bug fix,
+  also had no cause, and its commentary said that the body needed no Details. In two runs on a
+  private Rails application, the body named only the symptom, and the user asked both times
+  for the cause and the fix. Do not restore example 3's commentary on a re-sync.

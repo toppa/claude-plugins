@@ -106,7 +106,8 @@ they expect.
 ## 3. When reduction reveals emptiness
 
 Subtraction does not mean a shorter body. Sometimes the passes show a body that never
-said anything. Then the fix is a real sentence, not a shorter empty one.
+said anything. Then the passes add real sentences, and they do not keep a shorter empty
+one.
 
 **Before** — *Fix bug*
 
@@ -118,10 +119,17 @@ said anything. Then the fix is a real sentence, not a shorter empty one.
 >
 > Webhook deliveries that hit a 500 now go back on the queue, where before they were
 > marked complete and lost (ENG-4502).
+>
+> ## Details
+>
+> The worker marked a delivery complete before it read the response status, so a 500
+> counted as a success. The worker now reads the status first, and it puts the delivery
+> back on the queue on a 500.
 
-The new body is barely longer. It now tells the reviewer the effect, and the reason
-clause says why the effect matters. It has no Details section, because the reviewer would
-get nothing wrong without one.
+The new body is still short. The Summary tells the reviewer the effect, and the reason
+clause says why the effect matters. Details gives the cause and the fix. The diff shows
+the new code and not why the old code failed, so without the cause the reviewer cannot
+judge whether the fix removes the failure.
 
 ---
 
