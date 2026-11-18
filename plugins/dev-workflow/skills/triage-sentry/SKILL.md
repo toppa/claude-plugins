@@ -217,8 +217,14 @@ The run then changes at four points:
 
 ## Sentry cautions
 
-- **To move an issue from one ignore mode to another, set `unresolved` first.** A direct
-  mode change does not apply.
+- **Archive an issue whose activity feed holds an earlier archive in two calls.** The
+  first call sets `unresolved`, with no `reason`. The second call sets `ignored` with the
+  new mode, and it carries the `reason`, so the activity feed records the decision once.
+  Sentry refuses an archive of an issue that it still treats as archived, even at the same
+  mode. An issue that escalated out of an `untilEscalating` archive is such an issue.
+  `search_issues` lists that issue as `unresolved` and `escalating`, but `update_issue`
+  still treats it as archived. Measured 2026-11-18: such an issue refused `untilEscalating`
+  as "an already ignored issue". The same archive passed after a call that set `unresolved`.
 - Seer analysis is available through `analyze_issue_with_seer`. **Do not run it unasked,
   because it takes two to five minutes and it consumes credits.** Offer it instead.
 - **`get_issue_activity` and `add_issue_note` are catalog tools, and not top-level
