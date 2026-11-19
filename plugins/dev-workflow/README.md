@@ -79,7 +79,8 @@ You can use them in any typical software development workflow, in any programmin
   your plans. How often permission prompts stop the run depends on the permission mode of
   your session.
 - Before the run ends, an agent with no conversation context reviews the PR with the
-  `pr-review` skill. The run fixes each defect that the review finds.
+  `pr-review` skill. It also checks the commit messages and the PR's title and body against
+  their skills and your output style. The run fixes each defect that the review finds.
 - The run ends with one report: the PR link, the state of each check, and each decision that
   the run made in place of a stop. The report asks one question, which approves its
   recommended answer to each question that only you can settle. It saves a copy
