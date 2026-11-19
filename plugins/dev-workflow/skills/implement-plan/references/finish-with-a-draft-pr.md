@@ -40,7 +40,7 @@ file.
 - **A cold review of the PR, in a subagent that starts when the PR opens,** in parallel with
   the CI wait. The subagent reads [the pr-review skill](../../pr-review/SKILL.md) and
   follows it on the PR's URL. It reads the skill by path because only the user can invoke the
-  skill, and the pr-review-queue skill reads it the same way. The brief changes four defaults
+  skill, and the pr-review-queue skill reads it the same way. The brief changes five defaults
   of the skill:
   - The run's worktree is the review directory, and it sits on the PR head. Review it in
     place: build no worktree, and move no branch.
@@ -48,12 +48,19 @@ file.
   - Post nothing, and return the report.
   - The subagent cannot ask the user, so a question that the skill stops for goes into the
     report.
+  - The review also reads the PR's text, because no person reads it before the push. It
+    checks each commit message against the commit-messages skill's "Read the body back as
+    the reviewer" section, and the title and the body against the pr-descriptions skill.
+    Where the session writes in an output style, the brief gives the path of the style's
+    file, and the review checks all of the text against it.
 - **No commit until the review returns,** so that the worktree stays on the PR head while
   the subagent reads it. Where CI fails before then, diagnose the failure, and hold its fix.
 - **One verdict for each finding.** A Wrong finding goes into the decision list with its
-  reason. A Defect gets its fix. A Decision becomes an item of the final question, with its
-  options and, where you have one, a recommended option. Ignore the report's advice to a
-  reviewer of another person's PR, such as a verdict to approve.
+  reason. A Defect gets its fix. Fold a fix to a commit message with
+  `git commit --fixup=reword:<sha>`, because a plain `fixup!` commit keeps the old message.
+  Where the code changes too, use `--fixup=amend:<sha>`. A Decision becomes an item of the
+  final question, with its options and, where you have one, a recommended option. Ignore the report's advice to a reviewer of another
+  person's PR, such as a verdict to approve.
 - **One push for the review fixes and the held CI fixes.** That push is the first round of
   fixes. Wait for CI on its head, because that head is the one the user reviews. The fix loop
   above then runs as usual. The cold review runs one round only.

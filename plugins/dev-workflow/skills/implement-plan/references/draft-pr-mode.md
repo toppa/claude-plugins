@@ -10,6 +10,11 @@ plan run and an issue run share in the mode.
   stop the mode removes. Each other rule for `before push` in that skill holds here too,
   except where a rule names `draft PR`. For an issue with no plan, the implement-issue skill's
   "The `draft PR` mode" section names the stops that the mode removes.
+- **The skill that writes a text still runs where the mode removes the approval of that
+  text.** Invoke the commit-messages skill before each commit, and the pr-descriptions skill
+  before the PR opens. A call just before the text puts the whole skill in the context, next
+  to the draft. After a compaction, the context can hold only part of a skill, or only its
+  name.
 - **A stop only where the user must act.** These are the blocking stops, which the
   implement-plan skill's "Approval mode" section defines. The definition does not hold these
   details:
