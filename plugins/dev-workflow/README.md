@@ -138,6 +138,8 @@ You can use them in any typical software development workflow, in any programmin
 - It follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
   format, with a scope that names the feature.
 - Before the commit, it runs a check on each factual claim in the message.
+- Before you see the message, it reviews the draft against each of its rules in a separate
+  pass, and tells you which rules the draft failed and how it fixed them.
 - If the message explains more than two things, it proposes a split of the commit.
 - Before it runs `git commit`, it shows you the message for your approval (or you can tell
   Claude not to wait if you prefer).
