@@ -49,8 +49,8 @@ file.
   - The subagent cannot ask the user, so a question that the skill stops for goes into the
     report.
   - The review also reads the PR's text, because no person reads it before the push. It
-    checks each commit message against the commit-messages skill's "Read the body back as
-    the reviewer" section, and the title and the body against the pr-descriptions skill.
+    checks each commit message against all of the commit-messages skill, and the title and
+    the body against the pr-descriptions skill.
     Where the session writes in an output style, the brief gives the path of the style's
     file, and the review checks all of the text against it.
 - **No commit until the review returns,** so that the worktree stays on the PR head while
