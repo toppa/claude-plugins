@@ -93,7 +93,11 @@ count let through.
 ## Read the body back as the reviewer
 
 The reviewer has the repository and no way to ask you a question, so each sentence answers
-for itself. Read the body back after you leave the code, and apply these tests.
+for itself. Read the body back after you leave the code, in a pass of its own, as a reviewer
+who will ask for changes. Apply each rule of this skill to the draft one at a time, in every
+section from "Format" to "Voice". A single read of the whole draft passes it, because the
+writer reads past what the draft leaves out. When you present the message, name each failed
+rule and its fix, in one line each. Where the draft failed no rule, say so.
 
 **Each paragraph opens with the change it describes, and the reason follows.** A reason that
 comes first hides the change, and the reader skims past the one sentence that matters. A
