@@ -1,7 +1,7 @@
 # claude-plugins
 
 A personal Claude Code plugin marketplace: `rails-core` (18 skills), `inertia-react` (10),
-`dev-workflow` (10), `standing-documents` (1), and `ste-writing` (one output style and no
+`dev-workflow` (11), `standing-documents` (1), and `ste-writing` (one output style and no
 skill), plus an integrity checker. The root `README.md` pitches the marketplace to a new user.
 Each plugin's `README.md` describes that plugin. `CONTRIBUTING.md` says how to contribute, and
 it maps the maintainer's homes.

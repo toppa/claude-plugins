@@ -72,7 +72,8 @@ You can use them in any typical software development workflow, in any programmin
   closes when the PR merges. When the plan has no issue, it asks you whether to open a draft
   PR.
 - With `Approval mode: draft PR`, it runs the whole plan to a draft PR whose CI checks
-  pass, so that you review the work once, at the end. It does the work in a new git worktree.
+  pass, so that you review the work once, at the end. It does the work in a new git worktree,
+  with the `worktrees` skill.
 - In the `draft PR` mode, it stops only where you must act: a blocking stop that the plan
   marks, a question that it cannot settle alone, a problem that remains after two rounds of
   fixes, and a permission block (it gives you the command to run with `!`). It can also ask, once per project, whether you commit
@@ -127,6 +128,15 @@ You can use them in any typical software development workflow, in any programmin
 - It changes the issue only after you review the draft PR. The final report lists each proof,
   and it asks one question. The question approves the ticks, every other pending update, and
   its recommended answer to each review decision, as a batch.
+
+### [worktrees](skills/worktrees/SKILL.md)
+
+#### Create a git worktree, get its tests running, and clean it up after merging
+
+- It puts the worktree beside your repository, not inside it, so your IDE shows a diff instead of a folder of new files. (Claude Code's built-in worktree tool puts it inside `.claude/worktrees/`.)
+- It branches from a freshly fetched copy of your default branch, not your local copy, which may be behind `origin`.
+- It sets up the worktree the way your project's `CLAUDE.md` or `CLAUDE.local.md` says. If they don't provide guidance, it runs the tests, copies in git-ignored files it discovers it needs (such as a key), and then suggests setup instructions for you to save.
+- It removes a worktree only when you ask, or after its pull request merges.
 
 ### [commit-messages](skills/commit-messages/SKILL.md)
 

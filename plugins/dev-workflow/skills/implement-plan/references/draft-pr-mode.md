@@ -30,12 +30,10 @@ plan run and an issue run share in the mode.
 - **A new git worktree for the work,** made before the first edit to the repository, because
   sessions that share a checkout can switch its branch under each other. Where the commits
   include the plan and it is not committed yet, move it into the worktree at the same path
-  before the first step. Set it up as the project's CLAUDE.md and CLAUDE.local.md say. Where
-  they say nothing about worktrees, set up what the checks need when the need appears. Record
-  each setup step in the decision list, so that the user can add it to the project's
-  instructions. For a plan with no issue, name the branch after the verb phrase in the plan's
-  file name. For an issue, the implement-issue skill's "The `draft PR` mode" section names the
-  branch.
+  before the first step. Create the worktree and make it ready with the
+  `dev-workflow:worktrees` skill. For a plan with no issue, name the branch after the verb
+  phrase in the plan's file name. For an issue, the implement-issue skill's "The `draft PR`
+  mode" section names the branch.
 - **A decision list in the run's report file, written from the first decision on.** A run
   that starts again after a cleared context reads the list back from the file. The file's name
   is the issue's key, or else the plan's file name without `.md`, followed by

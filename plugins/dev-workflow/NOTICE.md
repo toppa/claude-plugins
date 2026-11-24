@@ -20,6 +20,7 @@ file is a licensing obligation, not a convenience.
 | `pr-review` | written here |
 | `pr-review-queue` | written here |
 | `triage-sentry` | written here |
+| `worktrees` | written here |
 | `write-issue` | written here |
 | `write-plan` | written here |
 

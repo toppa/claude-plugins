@@ -21,7 +21,7 @@ You can click any plugin listed below to see its README.
 
 | Plugin | What it does                                                                                                                                                           |
 |---|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`dev-workflow`](plugins/dev-workflow/README.md) | Skills for plan documents, issues, commits, PR reviews, PR descriptions, and Sentry triage                                                                             |
+| [`dev-workflow`](plugins/dev-workflow/README.md) | Skills for plan documents, issues, commits, PR reviews, PR descriptions, worktrees, and Sentry triage                                                                  |
 | [`standing-documents`](plugins/standing-documents/README.md) | A skill that sets up any software project with a comprehensive and self-maintaining documentation system (alpha stage)                                                 |
 | [`ste-writing`](plugins/ste-writing/README.md) | An output style that makes Claude easier to understand, based on [ASD-STE100 Simplified Technical English](https://en.wikipedia.org/wiki/Simplified_Technical_English) |
 | [`rails-core`](plugins/rails-core/README.md) | Skills and a `rails` agent for Ruby on Rails work                                                                                                                      |
