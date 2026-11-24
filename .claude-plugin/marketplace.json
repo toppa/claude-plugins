@@ -22,7 +22,7 @@
     {
       "name": "dev-workflow",
       "source": "./plugins/dev-workflow",
-      "description": "The workflow around the code, in any language: writing an issue for the team's tracker, implementing an issue against its acceptance criteria, writing a plan document, working it step by step, splitting a change into reviewable commits, writing the message for each one, writing the pull request title and body, reviewing a pull request or the queue of pull requests that await the user's review, and triaging the Sentry review queue.",
+      "description": "The workflow around the code, in any language: writing an issue for the team's tracker, implementing an issue against its acceptance criteria, writing a plan document, working it step by step, splitting a change into reviewable commits, writing the message for each one, writing the pull request title and body, creating and removing a git worktree, reviewing a pull request or the queue of pull requests that await the user's review, and triaging the Sentry review queue.",
       "category": "workflow",
       "keywords": ["git", "commits", "pull-requests", "code-review", "issues", "planning", "workflow"]
     },
