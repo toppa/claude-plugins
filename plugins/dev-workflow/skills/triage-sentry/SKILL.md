@@ -227,18 +227,19 @@ The run then changes at four points:
   as "an already ignored issue". The same archive passed after a call that set `unresolved`.
 - Seer analysis is available through `analyze_issue_with_seer`. **Do not run it unasked,
   because it takes two to five minutes and it consumes credits.** Offer it instead.
-- **`get_issue_activity` and `add_issue_note` are catalog tools, and not top-level
-  tools. Reach each one through `execute_sentry_tool`, because `ToolSearch` returns
-  nothing for either name.** `search_sentry_tools` returns the schema of a catalog tool.
-  `add_issue_note` takes the note as `text`.
+- **Load a Sentry tool with `ToolSearch` first. Reach it through `execute_sentry_tool`
+  only where `ToolSearch` finds nothing, because the connector has served the same tool
+  both ways.** `get_issue_activity`, `add_issue_note` and `link_issue` were once catalog
+  tools that only `execute_sentry_tool` reached. Measured 2026-11-25: `ToolSearch` loaded
+  all three as top-level tools, and the session offered no `execute_sentry_tool` at all.
+  `search_sentry_tools` returns the schema of a catalog tool. `add_issue_note` takes the
+  note as `text`. Where `ToolSearch` and `search_sentry_tools` both find nothing, report a
+  missing connection rather than a Sentry outage, and point the user at "What a run
+  needs", in `references/configuration.md`.
 - **An `issue:` filter overrides the `is:unresolved` default of `search_issues`.**
   Measured 2026-09-30: `issue:STOREFRONT-D` returned the issue while it was archived, and
   again after it was resolved. So an empty result for an `issue:` query is a real
   negative, inside the `period` of the call.
-- The top-level Sentry tools may be deferred in a session. Load them with `ToolSearch`
-  first. Where `search_sentry_tools` also finds nothing, report a missing connection
-  rather than a Sentry outage, and point the user at "What a run needs", in
-  `references/configuration.md`.
 
 ## The notes are living documents
 
