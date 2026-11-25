@@ -36,8 +36,8 @@ Call `list_issue_labels` for the team from `tracker.team`. Take two answers from
 
 ### The integration
 
-Run this check after the questions above. Call `get_alert_options` through
-`execute_sentry_tool` for the organization, with `section: "actions"` and
+Run this check after the questions above. Load `get_alert_options` as `SKILL.md`'s
+section "Sentry cautions" says. Call it for the organization, with `section: "actions"` and
 `actionTypes: ["sentry_app"]`. Look for a `sentryApp` whose `name` is `Linear`, and ask
 nothing. Where the organization has no Linear app, stop the interview and tell the user,
 because the skill links every task through that app.
@@ -86,8 +86,7 @@ the Linear issue goes to Done, Sentry resolves each linked Sentry issue in the n
 release. A Sentry URL in the Linear issue syncs nothing, and a Linear URL in a Sentry note
 syncs nothing.
 
-Make the link with `link_issue`, a Sentry catalog tool. Run it through
-`execute_sentry_tool`. `search_sentry_tools` returns its schema.
+Make the link with `link_issue`. Load it as `SKILL.md`'s section "Sentry cautions" says.
 
 **Do not call `link_issue` or `unlink_issue` in a subagent, because the permission
 classifier of auto mode can block the link there.** A move needs both calls in one place.
