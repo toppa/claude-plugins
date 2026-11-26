@@ -175,6 +175,9 @@ full name starts with a prefix from the name that the user gave the server, such
 - Where no connected server serves the tracker, tell the user. Then carry on with no
   tracker file.
 
+A tracker file can name a command-line tool in place of a server, such as `gh` for GitHub.
+That tracker file then says how to check that the tool works.
+
 ## The kinds
 
 | Kind | The work | Template |

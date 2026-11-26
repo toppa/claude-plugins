@@ -15,7 +15,8 @@ You can use them in any typical software development workflow, in any programmin
 ## Notes
 
 - 🙋 The `write-issue`, `implement-issue`, and `triage-sentry` skills know how to connect to
-  Linear. I designed them with future support for other trackers in mind as well. Please
+  Linear. The `write-issue` and `implement-issue` skills also work with GitHub Issues. I
+  designed them with future support for other trackers in mind as well. Please
   [open an issue](https://github.com/toppa/claude-plugins/issues) if you'd like to contribute
   support for one, and we can discuss a PR.
 - 💁 The frontmatter of each skill is tailored for Claude Code, but you can modify it for use with
@@ -92,7 +93,7 @@ You can use them in any typical software development workflow, in any programmin
 
 #### Draft and save an issue to a tracker, with acceptance criteria
 
-- Currently supports Linear (please
+- Currently supports Linear, and GitHub Issues through the `gh` CLI (please
   [contribute support for your tracker](../../CONTRIBUTING.md)). If you use an unsupported
   issue tracker, it gives you the issue as Markdown that you can copy and paste.
 - Its templates cover bugs, tasks, features (as Agile user stories), and projects (as
@@ -105,7 +106,7 @@ You can use them in any typical software development workflow, in any programmin
 
 #### Start work on an issue from a tracker, and close it when all acceptance criteria are met
 
-- Currently supports Linear (please
+- Currently supports Linear, and GitHub Issues through the `gh` CLI (please
   [contribute support for your tracker](../../CONTRIBUTING.md)). If you use an unsupported
   tracker, you can paste the issue's text.
 - Before the work starts, it reviews the issue, and stops only for a real blocker, such as a
