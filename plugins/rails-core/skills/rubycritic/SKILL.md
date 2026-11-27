@@ -1,13 +1,12 @@
 ---
 name: rubycritic
-description: Run RubyCritic to measure Ruby code smells, complexity, and duplication — the smells a tool reports, as against the ones you find by reading a diff, which belong to review-ruby-code. Wraps Reek, Flog, and Flay. The gem is absent from most projects, so this skill checks first.
+description: >-
+  Run RubyCritic, which wraps Reek, Flog, and Flay, to measure code smells,
+  complexity, and duplication in Ruby. Most projects do not have the gem, so this
+  skill checks first.
 when_to_use: >-
-  Use when the user asks to measure code quality, to run a code analysis, or to
-  check complexity or duplication, and when RubyCritic, Reek, Flog, or Flay is
-  named. Also use it after a refactor you already made, where the point of the run
-  is a number to set against the one before it; whether code should move at all, and
-  where it goes, is the `rails-core:extraction-timing` skill's. Smells you can see by
-  reading belong to the `rails-core:review-ruby-code` skill.
+  Use when the user asks for a code-quality measurement, or names RubyCritic,
+  Reek, Flog, or Flay.
 metadata:
   upstream_repo: el-feo/ai-context
   upstream_path: plugins/ruby-rails/skills/rubycritic/SKILL.md

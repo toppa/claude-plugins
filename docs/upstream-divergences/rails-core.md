@@ -60,6 +60,12 @@ Upstream: `ThibautBaissac/rails_ai_agents`, `.claude/skills/authentication-flow/
 - **Changed: upstream's opaque session token is kept as a labelled deviation from the
   generated contract,** in `references/sessions.md`. Do not present it as the generator's
   output, because the generated code does not have it.
+- **Changed: `description` and `when_to_use` name only the main triggers,** in about 80
+  tokens together. Every session and every subagent pays for these two fields, because a
+  subagent inherits the whole skill index [0001](../adr/). The `rails` agent does not
+  preload this skill. Its "Skills you can still reach for" section names the skill with no
+  trigger, so the agent also matches on these two fields. Do not bring back upstream's
+  longer list in a re-sync.
 
 ## `brakeman`
 
@@ -84,6 +90,12 @@ Upstream: `el-feo/ai-context`, `plugins/ruby-rails/skills/brakeman/SKILL.md`.
   Do not restore the joined string, because a crafted argument then runs a shell command.
 - **Changed: `public_send` is not the fix for `send`.** Brakeman warns on both at High
   confidence. The fix is a dispatch table.
+- **Changed: `description` and `when_to_use` name only the main triggers,** in about 70
+  tokens together. Every session and every subagent pays for these two fields, because a
+  subagent inherits the whole skill index [0001](../adr/). The `rails` agent does not
+  preload this skill. Its "Skills you can still reach for" section names the skill with no
+  trigger, so the agent also matches on these two fields. Do not bring back upstream's
+  longer list in a re-sync.
 
 ## `caching-strategies`
 
@@ -109,6 +121,12 @@ Upstream: `ThibautBaissac/rails_ai_agents`, `.claude/skills/caching-strategies/S
   table** [0009](../adr/).
 - **Changed: the caching specs swap in a `MemoryStore`.** The generated test environment uses
   `:null_store`, so upstream's assertions passed on an empty store and could not fail.
+- **Changed: `description` and `when_to_use` name only the main triggers,** in about 80
+  tokens together. Every session and every subagent pays for these two fields, because a
+  subagent inherits the whole skill index [0001](../adr/). The `rails` agent does not
+  preload this skill. Its "Skills you can still reach for" section names the skill with no
+  trigger, so the agent also matches on these two fields. Do not bring back upstream's
+  longer list in a re-sync.
 
 ## `extraction-timing`
 
@@ -336,6 +354,11 @@ Upstream: `el-feo/ai-context`, `plugins/ruby-rails/skills/rubycritic/SKILL.md`.
   produces exactly the smell it names.
 - **Cut: the GitLab CI block.** This stack has no GitLab, and its `before_script:` parsed to
   `!!null`.
+- **Changed: `description` and `when_to_use` name only the main triggers,** in about 70
+  tokens together. Every session and every subagent pays for these two fields, because a
+  subagent inherits the whole skill index [0001](../adr/). The `rails` agent does not
+  preload this skill. Its "Skills you can still reach for" section gives the agent its own
+  trigger for this skill. Do not bring back upstream's longer list in a re-sync.
 
 ## `security-audit`
 
@@ -389,6 +412,12 @@ Upstream: `ThibautBaissac/rails_ai_agents`, `.claude/skills/solid-queue-setup/SK
   cut it back in a pruning pass.
 - **Changed: the trigger "writes a job" is gone.** It matched every file in `app/jobs/`. The
   triggers name Solid Queue's own subjects and "why a job is not running".
+- **Changed: `description` and `when_to_use` name only the main triggers,** in about 70
+  tokens together. Every session and every subagent pays for these two fields, because a
+  subagent inherits the whole skill index [0001](../adr/). The `rails` agent does not
+  preload this skill. Its "Skills you can still reach for" section names the skill with no
+  trigger, so the agent also matches on these two fields. Do not bring back upstream's
+  longer list in a re-sync.
 
 ## `testprof`
 

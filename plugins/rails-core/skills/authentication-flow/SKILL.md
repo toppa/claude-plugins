@@ -1,12 +1,12 @@
 ---
 name: authentication-flow
-description: Rails 8 built-in authentication — what `bin/rails generate authentication` creates, the API it gives you (`allow_unauthenticated_access`, `authenticate_by`, `Current.user`, `rate_limit`, `has_secure_password`), password reset and API tokens via `generates_token_for`, and what you still have to build yourself.
+description: >-
+  Rails 8 built-in authentication: what `bin/rails generate authentication`
+  creates, its API, password reset, API tokens, and what you still build yourself.
 when_to_use: >-
-  Use when adding sign-in, sign-out, password reset, session expiry, or an API
-  token to a Rails 8 application, when the user mentions authentication, sessions,
-  `has_secure_password`, or how to sign a request spec in, and when deciding between
-  the built-in generator and an authentication gem. For `params.expect`, `normalizes`, or `rate_limit` outside
-  authentication, use the rails-8-idioms skill.
+  Use when you add sign-in, password reset, session expiry, or an API token to a
+  Rails 8 application, or when you choose between the built-in generator and an
+  authentication gem.
 metadata:
   upstream_repo: ThibautBaissac/rails_ai_agents
   upstream_path: .claude/skills/authentication-flow/SKILL.md

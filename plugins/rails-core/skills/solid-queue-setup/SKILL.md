@@ -1,14 +1,12 @@
 ---
 name: solid-queue-setup
 description: >-
-  Solid Queue, the Rails 8 Active Job backend — `config/queue.yml`, the `bin/jobs`
-  supervisor with its worker and dispatcher processes, the Puma plugin, concurrency
-  limits, recurring schedules, failed jobs and retries, and the move from Sidekiq.
+  Solid Queue, the Rails 8 Active Job backend: `config/queue.yml`, the `bin/jobs`
+  supervisor, concurrency limits, recurring schedules, failed jobs, retries, and
+  the move from Sidekiq.
 when_to_use: >-
-  Use when the user configures Solid Queue or a worker process, asks why a background
-  job is not running or not retrying, wants a concurrency limit or a recurring
-  schedule, inspects a failed job or a queue backlog, writes a job spec, reaches for
-  Mission Control, or moves from Sidekiq. For real-time WebSocket work, use Action Cable instead.
+  Use when the user configures Solid Queue, asks why a background job does not
+  run or retry, or moves from Sidekiq.
 metadata:
   upstream_repo: ThibautBaissac/rails_ai_agents
   upstream_path: .claude/skills/solid-queue-setup/SKILL.md
