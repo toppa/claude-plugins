@@ -1,16 +1,12 @@
 ---
 name: caching-strategies
 description: >-
-  Rails caching — choosing a cache store, Solid Cache in production, low-level
-  caching with `Rails.cache`, cache key design, HTTP caching with ETags and
-  `Cache-Control`, counter caches, memoization, cache invalidation, fragment
-  caching of an ERB partial, and caching one key of a props hash or a JSON payload.
+  Rails caching: the cache store, Solid Cache, `Rails.cache`, cache keys and
+  invalidation, HTTP caching with ETags, counter caches, fragment caching, and
+  caching one prop or one part of a JSON payload.
 when_to_use: >-
-  Use when the user asks to add caching or to cache a slow page, or mentions
-  cache keys, cache invalidation, a stale cache, ETags, `Cache-Control`, Solid
-  Cache, a counter cache, memoization, Russian doll caching, or caching one
-  prop or one part of a JSON response, and when testing a cache or reading its
-  hit rate.
+  Use when the user asks to cache something slow, when a cache returns stale
+  data, or when you write a spec for cached code.
 metadata:
   upstream_repo: ThibautBaissac/rails_ai_agents
   upstream_path: .claude/skills/caching-strategies/SKILL.md

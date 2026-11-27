@@ -1,19 +1,11 @@
 ---
 name: brakeman
 description: >-
-  The Brakeman binary end to end — how a Rails 8.1 project invokes it
-  (`bin/brakeman`, `bin/ci`), what each exit code means, how to read a warning's
-  confidence, how to suppress a false positive, and the flags and config keys
-  that exist. Covers
-  the companion gem-vulnerability scan, `bin/bundler-audit`.
+  Brakeman and bundler-audit in a Rails 8.1 project: how to run them, what each
+  exit code means, how to read a warning, and how to suppress a false positive.
 when_to_use: >-
-  Use when the user names Brakeman or bundler-audit, says `bin/ci` or the
-  security step is failing, asks why a scan exits non-zero or reports Brakeman
-  is outdated, asks about a warning or its confidence level, wants a security
-  scan wired into CI, wants to suppress a false positive, or edits
-  `config/brakeman.ignore`, `config/brakeman.yml`, or `config/bundler-audit.yml`.
-  For the review procedure itself — scope, severity ranking and report format —
-  use the security-audit skill.
+  Use when the user names Brakeman or bundler-audit, when the security step of
+  `bin/ci` fails, or when you edit `config/brakeman.ignore`.
 metadata:
   upstream_repo: el-feo/ai-context
   upstream_path: plugins/ruby-rails/skills/brakeman/SKILL.md
